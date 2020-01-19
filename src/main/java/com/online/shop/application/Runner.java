@@ -2,7 +2,7 @@ package com.online.shop.application;
 
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
-import com.online.shop.application.entities.Role;
+import com.online.shop.application.entities.Authority;
 import com.online.shop.application.entities.User;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
@@ -53,8 +53,8 @@ public class Runner implements CommandLineRunner {
             genericProduct.setCategory(value);
             productRepo.save(genericProduct);
         }
-        userRepo.save(User.builder().role(Role.USER).username("typicalUser").password(hash("strongPassword")).build());
-        userRepo.save(User.builder().role(Role.ADMIN).username("chadAdmin").password(hash("abc123")).build());
+        userRepo.save(User.builder().authority(Authority.USER).username("typicalUser").password(hash("strongPassword")).build());
+        userRepo.save(User.builder().authority(Authority.ADMIN).username("chadAdmin").password(hash("abc123")).build());
     }
 
     private String hash(String pass) {

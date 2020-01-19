@@ -37,7 +37,7 @@ public class CartService {
     }
 
     public Long getCartSize() {
-        return Long.valueOf(cart.size());
+        return (long) cart.size();
     }
 
     public void clearCart() {

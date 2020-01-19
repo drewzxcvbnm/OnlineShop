@@ -1,7 +1,10 @@
 package com.online.shop.application.exceptions;
 
+import lombok.NoArgsConstructor;
+
 import java.util.function.Supplier;
 
+@NoArgsConstructor
 public class ItemNotFoundException extends RuntimeException {
     public ItemNotFoundException(String message) {
         super(message);

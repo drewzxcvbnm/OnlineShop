@@ -18,12 +18,13 @@ public class ApplicationUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().getRole()));
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getAuthority().getRole());
+        return Collections.singleton(authority);
     }
 
     @Override
     public String getPassword() {
-        return "{bcrypt}"+user.getPassword();
+        return "{bcrypt}" + user.getPassword();
     }
 
     @Override

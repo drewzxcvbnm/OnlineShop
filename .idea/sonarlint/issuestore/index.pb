@@ -13,7 +13,5 @@ w
 Gsrc/main/java/com/online/shop/application/repositories/ProductRepo.java,4\6\4663ebd974563ce97e728edfd93b626c52f53afb
 {
 Ksrc/main/java/com/online/shop/application/configuration/SecurityConfig.java,7\9\7935faeafbf22eb791bae8012572fd336f91ef15
-z
-Jsrc/main/java/com/online/shop/application/services/ApplicationService.java,9\9\99e7be1210a08be417e9adeefe08c690dc3dad56
 n
 >src/test/java/com/online/shop/application/ApplicationTest.java,7\d\7d76a2dfa04feff3228fb30c4c72f116cdb896e0

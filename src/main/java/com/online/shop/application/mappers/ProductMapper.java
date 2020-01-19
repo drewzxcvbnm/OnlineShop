@@ -27,4 +27,13 @@ public class ProductMapper {
         return productDto;
     }
 
+    public Product updateEntity(Product entity, ProductDto dto) {
+        entity.setId(dto.getId());
+        entity.setDescription(dto.getDescription());
+        entity.setName(dto.getName());
+        entity.setPrice(dto.getPrice());
+        entity.setProperties(dto.getProperties());
+        return entity;
+    }
+
 }

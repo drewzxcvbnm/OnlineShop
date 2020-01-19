@@ -3,12 +3,12 @@ package com.online.shop.application.entities;
 import lombok.Getter;
 
 @Getter
-public enum Role {
+public enum Authority {
     USER("USER"),
     ADMIN("ADMIN");
     private String role;
 
-    Role(String role) {
+    Authority(String role) {
         this.role = role;
     }
 }
