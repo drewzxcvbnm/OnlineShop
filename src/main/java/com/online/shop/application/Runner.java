@@ -2,9 +2,13 @@ package com.online.shop.application;
 
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
+import com.online.shop.application.entities.Role;
+import com.online.shop.application.entities.User;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,6 +19,8 @@ import java.util.Arrays;
 public class Runner implements CommandLineRunner {
 
     private final ProductRepo productRepo;
+    private final UserRepo userRepo;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public void run(String... args) throws Exception {
@@ -47,5 +53,12 @@ public class Runner implements CommandLineRunner {
             genericProduct.setCategory(value);
             productRepo.save(genericProduct);
         }
+        userRepo.save(User.builder().role(Role.USER).username("typicalUser").password(hash("strongPassword")).build());
+        userRepo.save(User.builder().role(Role.ADMIN).username("chadAdmin").password(hash("abc123")).build());
     }
+
+    private String hash(String pass) {
+        return passwordEncoder.encode(pass);
+    }
+
 }

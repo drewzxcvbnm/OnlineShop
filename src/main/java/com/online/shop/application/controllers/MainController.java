@@ -35,18 +35,9 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/category/{category}")
-    public String categoryProducts(@PathVariable Category category, Model model) {
-        model.addAttribute("products", productRetrievalService.getProductsByCategory(category));
-        model.addAttribute("category", category.getDisplayName());
-        return "category-products";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
-
-    @GetMapping("/product/{id}")
-    public String getProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRetrievalService.getProduct(id));
-        return "product-page";
-    }
-
 
 }

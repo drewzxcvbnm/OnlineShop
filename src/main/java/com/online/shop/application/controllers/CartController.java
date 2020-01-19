@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/cart")
@@ -33,9 +34,9 @@ public class CartController {
     }
 
     @GetMapping("/clear")
-    public String clearCart(Model model) {
+    public ModelAndView clearCart(Model model) {
         cartService.clearCart();
-        return getCartContents(model);
+        return new ModelAndView("redirect:/cart/content");
     }
 
 }
