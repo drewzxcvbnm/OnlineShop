@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Fragments</title>
+    <link rel="stylesheet" href="/css/stylesheets.css">
+</head>
+<body>
+<div class="navbar" th:fragment="header">
+    <script>
+        function updateCartSize() {
+            const http = new XMLHttpRequest()
+            const url = window.location.origin + '/cart/size'
+            http.open("GET", url)
+            http.send()
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("cart-size").innerHTML=http.responseText
+                }
+            }
+        }
+        updateCartSize()
+    </script>
+    <ul class="nav navbar-nav">
+        <a href="/" style="color: black;font-size: x-large">Home</a>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <a href="/cart/content" style="color: crimson;font-size: x-large;">Cart<span
+                class="badge badge-light badge-pill" id="cart-size">0</span></a>
+    </ul>
+</div>
+</body>
+</html>
