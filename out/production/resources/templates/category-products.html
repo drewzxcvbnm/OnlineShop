@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -12,9 +12,30 @@
 <table class="table">
     <tr class="clickable" th:each="product : ${products}">
         <td id="product-name" style="width: 15%"><a th:text="${product.getName()}"
-                                 th:href="@{/product/{productId}(productId=${product.getId()})}"></a></td>
+                                                    th:href="@{/product/{productId}(productId=${product.getId()})}"></a>
+        </td>
         <td th:text="${product.getDescription()}"></td>
         <td style="width: 10%" th:text="${product.getPrice()}+'$'"></td>
+        <td sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/product/{id}/edit(id=${product.getId()})}">
+                <img class="ico" style="margin-left: 10px;"
+                     src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
+            </a>
+            <a th:href="@{/product/{cat}/{id}/delete(id=${product.getId()},cat=${cat})}">
+                <img class="ico" style="margin-left: 10px;"
+                     src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png"/>
+            </a>
+        </td>
+    </tr>
+    <tr class="clickable" sec:authorize="hasRole('ADMIN')">
+        <td colspan="4">
+            <a style="cursor: pointer" class="link" href="/product/create">
+                <img style="margin-right: 20px;vertical-align: top;margin-top: 5px;" src="https://img.icons8.com/cotton/2x/plus--v3.png"
+                     class="ico-bg"
+                     aria-hidden="true">
+                <span class="" style="font-size: xx-large;">Add new Product</span>
+            </a>
+        </td>
     </tr>
 </table>
 </body>

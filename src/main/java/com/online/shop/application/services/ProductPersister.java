@@ -22,4 +22,10 @@ public class ProductPersister {
         productRepo.save(product);
         return product;
     }
+
+    public ProductDto createProduct(ProductDto dto) {
+        Product newProduct = productMapper.toEntity(dto);
+        productRepo.save(newProduct);
+        return productMapper.toProductDto(newProduct);
+    }
 }

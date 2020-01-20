@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Product {
     @Lob
     private String description;
     @ElementCollection
-    private List<String> properties;
+    private List<String> properties = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private Category category;
     private BigDecimal price;

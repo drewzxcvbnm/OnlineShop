@@ -6,18 +6,6 @@
     <link rel="stylesheet" href="/css/stylesheets.css">
     <title>Product Page</title>
     <style>
-        .ico {
-            width: 20px;
-            height: 20px;
-            background: transparent;
-        }
-
-        .ico-sm {
-            width: 10px;
-            height: 10px;
-            background: transparent;
-        }
-
         .l-item {
             margin-right: 10px;
             cursor: pointer
@@ -56,7 +44,8 @@
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<form style="width: 40%;margin-left: 100px;margin-top: 50px" th:action="@{/product/{id}(id=${product.getId()})}"
+<form style="width: 40%;margin-left: 100px;margin-top: 50px"
+      th:action="${product.getId() != null} ? @{/product/{id}(id=${product.getId()})} : '/product/save'"
       th:object="${product}"
       method="post">
     <div class="form-group">
@@ -69,8 +58,12 @@
     </div>
     <div class="form-group">
         <label>Price: </label>
-        <input type="number" class="form-control" th:field="*{price}">
+        <input step=".01" type="number" class="form-control" th:field="*{price}">
     </div>
+    <select th:field="*{category}" th:value="*{category}" class="form-control">
+        <option th:value="${cat}" th:text="${cat}"
+                th:each="cat : ${T(com.online.shop.application.entities.Category).values()}"></option>
+    </select>
     <div class="form-group">
         <label>Properties: </label>
         <ul class="list-group" id="property-list">
@@ -89,7 +82,6 @@
         </ul>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
 </body>
 </html>

@@ -30,7 +30,9 @@
 <body>
 <div th:replace="fragments :: header"></div>
 <div sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/product/{productId}/edit(productId=${product.getId()})}">Edit</a>
+    <a th:href="@{/product/{productId}/edit(productId=${product.getId()})}">
+        <img class="ico" style="margin-left: 10px;" src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
+    </a>
 </div>
 <div style="display: flex;align-items: center">
     <h1 th:text="${product.getName()}" style="flex-grow: 3"></h1>
