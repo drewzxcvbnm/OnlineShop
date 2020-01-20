@@ -1,18 +1,25 @@
 package com.online.shop.application.services;
 
 import com.online.shop.application.dto.LightProductDto;
+import com.online.shop.application.dto.OrderDto;
+import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
+import com.online.shop.application.entities.Purchase;
 import com.online.shop.application.exceptions.ItemNotFoundException;
+import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.mappers.ProductMapper;
+import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +29,8 @@ public class CartService {
 
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
+    private final OrderMapper orderMapper;
+    private final OrderRepo orderRepo;
     private List<Product> cart = new ArrayList<>();
 
     public void addProductToCart(Long productId) {
@@ -33,6 +42,26 @@ public class CartService {
     public List<LightProductDto> getCartProducts() {
         return cart.stream()
                 .map(productMapper::toCategoryProductDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void submitOrder(OrderDto orderDto) {
+        Order order = orderMapper.toEntity(orderDto);
+        List<Purchase> purchasedProducts = getPurchasedProducts(order);
+        order.getPurchases().addAll(purchasedProducts);
+        orderRepo.save(order);
+        cart.clear();
+    }
+
+    private List<Purchase> getPurchasedProducts(Order order) {
+        return cart.stream()
+                .map(Product::getId)
+                .map(productRepo::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(pr -> new Purchase(order, pr))
+                .peek(purchase -> purchase.getProduct().getPurchases().add(purchase))
                 .collect(Collectors.toList());
     }
 

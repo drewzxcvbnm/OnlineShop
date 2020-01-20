@@ -1,5 +1,6 @@
 package com.online.shop.application.controllers;
 
+import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,21 @@ public class CartController {
         cartService.clearCart();
         return new ModelAndView("redirect:/cart/content");
     }
+
+    @GetMapping("/checkout")
+    public String checkout(Model model) {
+        OrderDto orderDto = new OrderDto();
+        model.addAttribute("order", orderDto);
+        return "form-order";
+    }
+
+    @PostMapping("/submit")
+    public String submitOrder(@ModelAttribute OrderDto orderDto, Model model) {
+        cartService.submitOrder(orderDto);
+        model.addAttribute("showMessage", true);
+        model.addAttribute("message", "Order has been successfully submitted");
+        return "index";
+    }
+
 
 }

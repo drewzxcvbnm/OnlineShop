@@ -28,4 +28,6 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Category category;
     private BigDecimal price;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
+    private List<Purchase> purchases = new ArrayList<>();
 }

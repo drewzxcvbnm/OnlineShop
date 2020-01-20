@@ -8,6 +8,9 @@
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
+<div th:if="${showMessage}">
+    <div class="alert alert-success" th:text="${message}"></div>
+</div>
 <h1>Product Catalog:</h1>
 <table class="table">
     <tr class="clickable" th:each="category : ${T(com.online.shop.application.entities.Category).values()}">

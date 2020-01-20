@@ -44,7 +44,7 @@
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<form style="width: 40%;margin-left: 100px;margin-top: 50px"
+<form class="shop-form"
       th:action="${product.getId() != null} ? @{/product/{id}(id=${product.getId()})} : '/product/save'"
       th:object="${product}"
       method="post">

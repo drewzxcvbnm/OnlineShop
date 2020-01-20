@@ -86,3 +86,9 @@
 .link:hover {
     text-decoration: aqua;
 }
+
+.shop-form {
+    width: 40%;
+    margin-left: 100px;
+    margin-top: 50px
+}
