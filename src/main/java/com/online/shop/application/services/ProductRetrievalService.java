@@ -1,6 +1,6 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.LightProductDto;
+import com.online.shop.application.dto.CategoryProductDto;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
@@ -20,7 +20,7 @@ public class ProductRetrievalService {
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
 
-    public List<LightProductDto> getProductsByCategory(Category category) {
+    public List<CategoryProductDto> getProductsByCategory(Category category) {
         List<Product> products = productRepo.findAllByCategory(category);
         return products.stream()
                 .map(productMapper::toCategoryProductDto)

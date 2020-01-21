@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class ApplicationUserPrincipal implements UserDetails {
 
-    private User user;
+    private transient User user;
 
     public ApplicationUserPrincipal(User user) {
         this.user = user;

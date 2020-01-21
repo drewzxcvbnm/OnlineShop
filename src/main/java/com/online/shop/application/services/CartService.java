@@ -1,6 +1,6 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.LightProductDto;
+import com.online.shop.application.dto.CategoryProductDto;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
@@ -39,7 +39,7 @@ public class CartService {
         cart.add(product);
     }
 
-    public List<LightProductDto> getCartProducts() {
+    public List<CategoryProductDto> getCartProducts() {
         return cart.stream()
                 .map(productMapper::toCategoryProductDto)
                 .collect(Collectors.toList());
@@ -61,7 +61,6 @@ public class CartService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(pr -> new Purchase(order, pr))
-                .peek(purchase -> purchase.getProduct().getPurchases().add(purchase))
                 .collect(Collectors.toList());
     }
 

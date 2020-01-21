@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/stylesheets.css">
+    <title>Main Page</title>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div th:if="${showMessage}">
+    <div class="alert alert-success" th:text="${message}"></div>
+</div>
+<h1>Product Catalog:</h1>
+<table class="table">
+    <tr class="clickable" th:each="category : ${T(com.online.shop.application.entities.Category).values()}">
+        <td><img id="category-img" class="rounded mx-auto d-block" th:src="@{/images/{img}(img=${category.getImg()})}">
+        </td>
+        <td id="category-name"><a th:text="${category.getDisplayName()}"
+                                  th:href="@{/category/{cat}(cat=${category})}"></a></td>
+    </tr>
+</table>
+</body>
+</html>

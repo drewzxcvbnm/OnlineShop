@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/stylesheets.css">
+    <title>Product Page</title>
+    <style>
+        .l-item {
+            margin-right: 10px;
+            cursor: pointer
+        }
+    </style>
+    <script>
+        idNum = [[${product.getProperties().size()}]]
+
+        function addProperty() {
+            id = idNum++;
+            var list = document.getElementById("property-list");
+            var li = document.createElement("li")
+            var inp = document.createElement("input")
+            var img = document.createElement("img")
+            img.setAttribute("src", "https://image.flaticon.com/icons/svg/59/59836.svg")
+            img.setAttribute("onclick", "removeProperty(" + id + ")")
+            img.setAttribute("style", "margin-right: 10px;cursor: pointer")
+            img.classList.add("ico-sm")
+            inp.setAttribute("type", "text")
+            inp.setAttribute("name", "properties")
+            inp.setAttribute("th:value", "${property}")
+            inp.classList.add("form-control")
+            li.classList.add("list-group-item")
+            li.setAttribute("id", "property-" + id)
+            li.appendChild(img)
+            li.appendChild(inp)
+            li.setAttribute("style", "display: flex;align-items: center")
+            list.insertBefore(li, list.childNodes[list.childNodes.length - 2])
+        }
+
+        function removeProperty(i) {
+            var elementById = document.getElementById("property-list");
+            elementById.removeChild(document.getElementById("property-" + i));
+        }
+    </script>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<form class="shop-form"
+      th:action="${product.getId() != null} ? @{/product/{id}(id=${product.getId()})} : '/product/save'"
+      th:object="${product}"
+      method="post">
+    <div class="form-group">
+        <label>Name: </label>
+        <input type="text" class="form-control" th:field="*{name}">
+    </div>
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea style="height: auto" class="form-control" rows="5" th:field="*{description}"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Price: </label>
+        <input step=".01" type="number" class="form-control" th:field="*{price}">
+    </div>
+    <select th:field="*{category}" th:value="*{category}" class="form-control">
+        <option th:value="${cat}" th:text="${cat}"
+                th:each="cat : ${T(com.online.shop.application.entities.Category).values()}"></option>
+    </select>
+    <div class="form-group">
+        <label>Properties: </label>
+        <ul class="list-group" id="property-list">
+            <li th:id="'property-'+${iter.index}" style="display: flex;align-items: center" class="list-group-item"
+                th:each="property,iter : *{properties}">
+                <img th:onclick="removeProperty([[${iter.index}]])" class="ico-sm"
+                     style="margin-right: 10px;cursor: pointer"
+                     src="https://image.flaticon.com/icons/svg/59/59836.svg"/>
+                <input type="text" name="properties" class="form-control" th:value="${property}">
+            </li>
+            <li class="list-group-item clickable" style="vertical-align: middle;cursor: pointer"
+                onclick="addProperty()"><img
+                    th:src="@{/images/pls.png}" class="ico" aria-hidden="true">
+                <span style="margin-left: 10px;">Add to List</span>
+            </li>
+        </ul>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>

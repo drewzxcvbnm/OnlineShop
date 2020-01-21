@@ -1,6 +1,6 @@
 package com.online.shop.application.mappers;
 
-import com.online.shop.application.dto.LightProductDto;
+import com.online.shop.application.dto.CategoryProductDto;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Product;
 import org.springframework.stereotype.Component;
@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper {
 
-    public LightProductDto toCategoryProductDto(Product product) {
-        LightProductDto lightProductDto = new LightProductDto();
-        lightProductDto.setId(product.getId());
-        lightProductDto.setName(product.getName());
-        lightProductDto.setDescription(product.getDescription());
-        lightProductDto.setPrice(product.getPrice());
-        return lightProductDto;
+    public CategoryProductDto toCategoryProductDto(Product product) {
+        CategoryProductDto categoryProductDto = new CategoryProductDto();
+        categoryProductDto.setId(product.getId());
+        categoryProductDto.setName(product.getName());
+        categoryProductDto.setDescription(product.getDescription());
+        categoryProductDto.setPrice(product.getPrice());
+        return categoryProductDto;
     }
 
     public ProductDto toProductDto(Product product) {

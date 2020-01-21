@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class ItemController {
 
+    public static final String PRODUCT = "product";
     private final ProductRetrievalService productRetrievalService;
     private final ProductPersister productPersister;
     private final ProductRepo productRepo;
@@ -34,7 +35,7 @@ public class ItemController {
 
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRetrievalService.getProduct(id));
+        model.addAttribute(PRODUCT, productRetrievalService.getProduct(id));
         return "product-page";
     }
 
@@ -43,7 +44,7 @@ public class ItemController {
                               @ModelAttribute ProductDto dto,
                               Model model) {
         Product product = productPersister.updateProduct(id, dto);
-        model.addAttribute("product", product);
+        model.addAttribute(PRODUCT, product);
         return "product-page";
     }
 
@@ -51,7 +52,7 @@ public class ItemController {
     public String saveProduct(@ModelAttribute ProductDto dto,
                               Model model) {
         ProductDto product = productPersister.createProduct(dto);
-        model.addAttribute("product", product);
+        model.addAttribute(PRODUCT, product);
         return "redirect:/product/" + product.getId();
     }
 
@@ -59,7 +60,7 @@ public class ItemController {
     @GetMapping("/product/{productId}/edit")
     public String editProduct(@PathVariable Long productId, Model model) {
         ProductDto product = productRetrievalService.getProduct(productId);
-        model.addAttribute("product", product);
+        model.addAttribute(PRODUCT, product);
         return "edit-product";
     }
 
@@ -72,7 +73,7 @@ public class ItemController {
     @GetMapping("/product/create")
     public String createProduct(Model model) {
         ProductDto product = new ProductDto();
-        model.addAttribute("product", product);
+        model.addAttribute(PRODUCT, product);
         return "edit-product";
     }
 
