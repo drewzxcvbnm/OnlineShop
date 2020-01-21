@@ -4,7 +4,8 @@ on: [push]
 
 jobs:
   build:
-
+    env:
+      CODECOV_TOKEN: 'd1d49104-6ce0-4e8d-bbce-abebb90f2824'
     runs-on: ubuntu-latest
 
     steps:
@@ -15,3 +16,9 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Codecov
+      uses: codecov/codecov-action@v1.0.5
+      with:
+        name: OnlineShop
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
