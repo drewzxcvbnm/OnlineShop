@@ -63,6 +63,7 @@ public class CartServiceTest {
         when(orderMapper.toEntity(dto)).thenReturn(order);
         when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
         cartService.submitOrder(dto);
+        verify(orderRepo).save(order);
     }
 
     @Test
