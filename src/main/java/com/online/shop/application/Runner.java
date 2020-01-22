@@ -1,8 +1,8 @@
 package com.online.shop.application;
 
+import com.online.shop.application.entities.Authority;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
-import com.online.shop.application.entities.Authority;
 import com.online.shop.application.entities.User;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
@@ -24,6 +24,18 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        productRepo.save(Product.builder().category(Category.PORTABLE_ELECTRONICS)
+                .name("Samsung Galaxy S10")
+                .description("Beautiful all-screen design and top-of-the-line processor. Samsung packed in tons of fun features: An ultrasonic fingerprint sensor! Wireless charging with power sharing! A headphone jack! Samsung UI has finally improved. Security updates are planned.")
+                .price(new BigDecimal("899.99"))
+                .properties(Arrays.asList("Weight: 157g.", "Dimensions: 149.9 x 70.4 x 7.8mm.", "OS: Android 9.", "CPU: Octa-core chipset.", "RAM: 8GB.", "Storage: 128/512GB."))
+                .build());
+        productRepo.save(Product.builder().category(Category.PORTABLE_ELECTRONICS)
+                .name("iPhone 11")
+                .description("The iPhone 11 succeeds the iPhone XR, and it features a 6.1-inch LCD display that Apple calls a \"Liquid Retina HD Display.\" It features a 1792 x 828 resolution at 326ppi, a 1400:1 contrast ratio, 625 nits max brightness, True Tone support for adjusting the white balance to the ambient lighting, and wide color support for true-to-life colors.")
+                .price(new BigDecimal("1299.99"))
+                .properties(Arrays.asList("Display: Liquid Retina HD display", "Camera: Dual 12MP Ultra Wide and Wide cameras", "OS: iOS 13, upgradable to iOS 13.3", "CPU: Hexa-core (2x2.65 GHz Lightning + 4x1.8 GHz Thunder)"))
+                .build());
         productRepo.save(Product.builder().category(Category.COMPUTERS)
                 .name("Lenovo V130 15")
                 .description("The V130 15.6\" laptop delivers great performance in a patterned, textured cover that bespeaks modern style. A simple, clean design features a large, one-piece touchpad and hinges that open 180 degrees—perfect for collaborating. Powerful Intel® technology keeps you working productively, while enhanced security protects your critical data.")
