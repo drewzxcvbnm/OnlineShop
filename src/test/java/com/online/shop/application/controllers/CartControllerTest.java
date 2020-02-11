@@ -2,6 +2,7 @@ package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.services.CartService;
+import com.online.shop.application.services.ValidationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,8 @@ public class CartControllerTest {
     private CartService cartService;
     @Mock
     private Model model;
+    @Mock
+    private ValidationService validationService;
     @InjectMocks
     private CartController cartController;
 
@@ -58,9 +61,18 @@ public class CartControllerTest {
     }
 
     @Test
-    public void submitOrder() {
+    public void submitOrderInvalid() {
         OrderDto orderDto = new OrderDto();
+        assertThat(cartController.submitOrder(orderDto, model)).isEqualTo("form-order");
+        verify(validationService).isValid(any(), eq(model));
+    }
+
+    @Test
+    public void submitOrderValid() {
+        OrderDto orderDto = new OrderDto();
+        when(validationService.isValid(orderDto, model)).thenReturn(true);
         assertThat(cartController.submitOrder(orderDto, model)).isEqualTo("index");
+        verify(validationService).isValid(any(), eq(model));
         verify(cartService).submitOrder(orderDto);
         verify(model).addAttribute(eq("showMessage"), any());
         verify(model).addAttribute(eq("message"), any());

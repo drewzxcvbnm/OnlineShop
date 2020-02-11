@@ -2,6 +2,7 @@ package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.services.CartService;
+import com.online.shop.application.services.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CartController {
 
     private final CartService cartService;
+    private final ValidationService validationService;
 
     @GetMapping("/content")
     public String getCartContents(Model model) {
@@ -49,6 +51,10 @@ public class CartController {
 
     @PostMapping("/submit")
     public String submitOrder(@ModelAttribute OrderDto orderDto, Model model) {
+        if (!validationService.isValid(orderDto, model)) {
+            model.addAttribute("order", orderDto);
+            return "form-order";
+        }
         cartService.submitOrder(orderDto);
         model.addAttribute("showMessage", true);
         model.addAttribute("message", "Order has been successfully submitted");
