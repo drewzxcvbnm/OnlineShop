@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+
+  <!-- Reason: To be included in service assembly == -->
+  <Match>
+    <Bug pattern="CRLF_INJECTION_LOGS" />
+  </Match>
+
+  <!-- Reason: Deferred To implement a better solution to generate sequence names from product -->
+  <Match>
+    <Class name="fi.mandatumlife.epeli.api.uc14.InsuranceNumberSequenceRepository" />
+    <Bug pattern="SQL_INJECTION_JPA" />
+  </Match>
+
+  <!-- Reason: Separate work for global fixes : Needs e2e testing to avoid side effects -->
+  <Match>
+    <Bug pattern="EQ_OVERRIDING_EQUALS_NOT_SYMMETRIC" />
+  </Match>
+
+  <!-- Reason: Separate work for global fixes : Needs e2e testing to avoid side effects -->
+  <Match>
+    <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+  </Match>
+
+  <!-- Reason: Boolean value may be True, False or Null in DB -->
+  <Match>
+    <Class name="fi.mandatumlife.epeli.api.s61.mapper.IdentificationMapperImpl" />
+    <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
+  </Match>
+
+  <!-- Reason: Introduced as a part of library use -->
+  <Match>
+    <Class name="fi.mandatumlife.epeli.api.uc54.core.configuration.PrintoutTemplateConfiguration" />
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+  </Match>
+
+  <!-- Reason: constructed file path cannot fully be controlled by the user, reported instance is a false positive-->
+  <Match>
+    <Class name="fi.mandatumlife.epeli.api.b11.if17.FilePathGenerator" />
+    <Bug pattern="PATH_TRAVERSAL_IN" />
+  </Match>
+
+
+</FindBugsFilter>
+

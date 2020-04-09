@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<ruleset name="My app ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>
+        My app's PMD ruleset
+    </description>
+  <rule ref="category/java/bestpractices.xml">
+    <exclude name="GuardLogStatement"/>
+  </rule>
+
+  <rule ref="category/java/security.xml"/>
+
+  <rule ref="category/java/multithreading.xml">
+    <exclude name="UseConcurrentHashMap"/>
+    <exclude name="DoNotUseThreads"/>
+  </rule>
+
+
+  <rule ref="category/java/performance.xml">
+    <exclude name="AvoidInstantiatingObjectsInLoops"/>
+  </rule>
+
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="AvoidLiteralsInIfCondition"/>
+    <exclude name="DataflowAnomalyAnalysis"/>
+    <exclude name="BeanMembersShouldSerialize"/>
+    <exclude name="AvoidDuplicateLiterals"/>
+    <exclude name="NullAssignment"/>
+    <exclude name="UseLocaleWithCaseConversions"/>
+    <exclude name="MissingSerialVersionUID"/>
+  </rule>
+
+  <!--  TODO: select only necessary rules from codestyle directory -->
+  <rule ref="category/java/codestyle.xml">
+    <exclude name="MethodArgumentCouldBeFinal"/>
+    <exclude name="LocalVariableCouldBeFinal"/>
+    <exclude name="LongVariable"/>
+    <exclude name="ShortVariable"/>
+    <exclude name="AtLeastOneConstructor"/>
+    <exclude name="ShortClassName"/>
+    <exclude name="UnnecessaryAnnotationValueElement"/>
+    <exclude name="OnlyOneReturn"/>
+    <exclude name="CommentDefaultAccessModifier"/>
+    <exclude name="DefaultPackage"/>
+    <exclude name="ShortMethodName"/>
+    <exclude name="ClassNamingConventions"/>
+    <exclude name="TooManyStaticImports"/>
+    <exclude name="FieldDeclarationsShouldBeAtStartOfClass"/>
+    <exclude name="CallSuperInConstructor"/>
+    <exclude name="ConfusingTernary"/>
+<!--    <exclude name="LinguisticNaming"/>  &lt;!&ndash; TODO: enable in future &ndash;&gt;-->
+<!--    <exclude name="UnnecessaryLocalBeforeReturn"/>  &lt;!&ndash; TODO: enable in future &ndash;&gt;-->
+<!--    <exclude name="UselessParentheses"/>  &lt;!&ndash; TODO: low priority &ndash;&gt;-->
+<!--    <exclude name="PrematureDeclaration"/>  &lt;!&ndash; TODO: medium priority &ndash;&gt;-->
+<!--    <exclude name="UseShortArrayInitializer"/>  &lt;!&ndash; TODO: medium priority &ndash;&gt;-->
+  </rule>
+</ruleset>
+

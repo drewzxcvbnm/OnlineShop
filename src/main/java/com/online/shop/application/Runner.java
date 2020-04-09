@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("checkstyle:linelength")
 public class Runner implements CommandLineRunner {
 
     private final ProductRepo productRepo;
