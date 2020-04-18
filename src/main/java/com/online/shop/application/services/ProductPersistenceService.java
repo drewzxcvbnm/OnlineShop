@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProductPersister {
+public class ProductPersistenceService {
 
     private final ProductMapper productMapper;
     private final ProductRepo productRepo;

@@ -4,7 +4,7 @@ import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.services.ProductDeletionService;
-import com.online.shop.application.services.ProductPersister;
+import com.online.shop.application.services.ProductPersistenceService;
 import com.online.shop.application.services.ProductRetrievalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ public class ItemControllerTest {
     @Mock
     private ProductRetrievalService productRetrievalService;
     @Mock
-    private ProductPersister productPersister;
+    private ProductPersistenceService productPersistenceService;
     @Mock
     private ProductRepo productRepo;
     @Mock
@@ -52,7 +52,7 @@ public class ItemControllerTest {
         ProductDto dto = new ProductDto();
         assertThat(itemController.saveProduct(-1L, dto, model))
                 .isEqualTo("product-page");
-        verify(productPersister).updateProduct(-1L, dto);
+        verify(productPersistenceService).updateProduct(-1L, dto);
         verify(model).addAttribute(eq("product"), any());
     }
 
@@ -60,11 +60,11 @@ public class ItemControllerTest {
     public void testSaveProduct() {
         ProductDto product = new ProductDto();
         product.setId(-1L);
-        when(productPersister.createProduct(any())).thenReturn(product);
+        when(productPersistenceService.createProduct(any())).thenReturn(product);
         assertThat(itemController.saveProduct(new ProductDto(), model))
                 .isEqualTo("redirect:/product/-1");
         verify(model).addAttribute(eq("product"), any());
-        verify(productPersister).createProduct(any());
+        verify(productPersistenceService).createProduct(any());
 
     }
 

@@ -5,7 +5,7 @@ import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.services.ProductDeletionService;
-import com.online.shop.application.services.ProductPersister;
+import com.online.shop.application.services.ProductPersistenceService;
 import com.online.shop.application.services.ProductRetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class ItemController {
 
     public static final String PRODUCT = "product";
     private final ProductRetrievalService productRetrievalService;
-    private final ProductPersister productPersister;
+    private final ProductPersistenceService productPersistenceService;
     private final ProductRepo productRepo;
     private final ProductDeletionService productDeletionService;
 
@@ -43,7 +43,7 @@ public class ItemController {
     public String saveProduct(@PathVariable Long id,
                               @ModelAttribute ProductDto dto,
                               Model model) {
-        Product product = productPersister.updateProduct(id, dto);
+        Product product = productPersistenceService.updateProduct(id, dto);
         model.addAttribute(PRODUCT, product);
         return "product-page";
     }
@@ -51,7 +51,7 @@ public class ItemController {
     @PostMapping("/product/save")
     public String saveProduct(@ModelAttribute ProductDto dto,
                               Model model) {
-        ProductDto product = productPersister.createProduct(dto);
+        ProductDto product = productPersistenceService.createProduct(dto);
         model.addAttribute(PRODUCT, product);
         return "redirect:/product/" + product.getId();
     }

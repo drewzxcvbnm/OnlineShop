@@ -18,21 +18,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProductPersisterTest {
+public class ProductPersistenceServiceTest {
 
     @Mock
     private ProductMapper productMapper;
     @Mock
     private ProductRepo productRepo;
     @InjectMocks
-    private ProductPersister productPersister;
+    private ProductPersistenceService productPersistenceService;
 
     @Test
     public void updateProduct() {
         Product product = new Product();
         ProductDto dto = new ProductDto();
         when(productRepo.findById(1L)).thenReturn(Optional.of(product));
-        productPersister.updateProduct(1L, dto);
+        productPersistenceService.updateProduct(1L, dto);
         verify(productMapper).updateEntity(eq(product), any());
         verify(productRepo).save(any());
     }
@@ -42,7 +42,7 @@ public class ProductPersisterTest {
         ProductDto dto = new ProductDto();
         Product product = new Product();
         when(productMapper.toEntity(dto)).thenReturn(product);
-        productPersister.createProduct(dto);
+        productPersistenceService.createProduct(dto);
         verify(productRepo).save(product);
     }
 }
