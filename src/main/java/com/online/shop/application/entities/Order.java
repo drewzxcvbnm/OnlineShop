@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "\"ORDER\"")
-
 public class Order {
 
     @Id
@@ -26,5 +25,4 @@ public class Order {
     private String bankAccount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<Purchase> purchases = new ArrayList<>();
-
 }

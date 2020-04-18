@@ -1,21 +1,30 @@
 package com.online.shop.application.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 @Getter
+@Setter
+@Builder
+@ToString(of = {"id"})
+@NoArgsConstructor
 @AllArgsConstructor
-public enum Category {
-    PORTABLE_ELECTRONICS("Portable electronics", "pe.png"),
-    COMPUTERS("Computers", "c.png"),
-    VIDEO_GAMES("Video games", "vg.png"),
-    AUTOMOBILE("Automobile", "a.png"),
-    FURNITURE("Furniture", "f.png"),
-    HOUSEHOLD_APPLIANCES("Household appliances", "ha.png"),
-    CLOTHES("Clothes", "cl.png"),
-    COSMETICS("Cosmetics", "cm.png");
+public class Category {
 
-    private String displayName;
+    @Id
+    @GeneratedValue
+    private Long id;
     private String img;
+    private String displayName;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 
+    public Category(String img, String displayName) {
+        this.img = img;
+        this.displayName = displayName;
+    }
 }

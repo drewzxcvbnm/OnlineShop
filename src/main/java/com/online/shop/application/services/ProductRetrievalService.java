@@ -21,8 +21,8 @@ public class ProductRetrievalService {
     private final ProductMapper productMapper;
 
     public List<CategoryProductDto> getProductsByCategory(Category category) {
-        List<Product> products = productRepo.findAllByCategory(category);
-        return products.stream()
+        return category.getProducts()
+                .stream()
                 .map(productMapper::toCategoryProductDto)
                 .collect(Collectors.toList());
     }

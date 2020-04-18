@@ -13,11 +13,11 @@
 </div>
 <h1>Product Catalog:</h1>
 <table class="table">
-    <tr class="clickable" th:each="category : ${T(com.online.shop.application.entities.Category).values()}">
+    <tr class="clickable" th:each="category : ${categories}">
         <td><img id="category-img" class="rounded mx-auto d-block" th:src="@{/images/{img}(img=${category.getImg()})}">
         </td>
         <td id="category-name"><a th:text="${category.getDisplayName()}"
-                                  th:href="@{/category/{cat}(cat=${category})}"></a></td>
+                                  th:href="@{/category/{cat}(cat=${category.id})}"></a></td>
     </tr>
 </table>
 </body>

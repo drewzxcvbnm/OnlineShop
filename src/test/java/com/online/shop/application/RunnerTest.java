@@ -1,5 +1,6 @@
 package com.online.shop.application;
 
+import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
 import org.junit.Test;
@@ -19,6 +20,8 @@ public class RunnerTest {
 
     @Mock
     private ProductRepo productRepo;
+    @Mock
+    private CategoryRepo categoryRepo;
     @Mock
     private UserRepo userRepo;
     @Mock
