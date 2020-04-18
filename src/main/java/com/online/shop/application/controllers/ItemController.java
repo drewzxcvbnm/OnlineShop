@@ -3,6 +3,7 @@ package com.online.shop.application.controllers;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
+import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.services.ProductDeletionService;
 import com.online.shop.application.services.ProductPersistenceService;
@@ -24,9 +25,11 @@ public class ItemController {
     private final ProductPersistenceService productPersistenceService;
     private final ProductRepo productRepo;
     private final ProductDeletionService productDeletionService;
+    private final CategoryRepo categoryRepo;
 
-    @GetMapping("/category/{category}")
-    public String categoryProducts(@PathVariable Category category, Model model) {
+    @GetMapping("/category/{categoryId}")
+    public String categoryProducts(@PathVariable long categoryId, Model model) {
+        Category category = categoryRepo.getById(categoryId);
         model.addAttribute("products", productRetrievalService.getProductsByCategory(category));
         model.addAttribute("category", category.getDisplayName());
         model.addAttribute("cat", category);
@@ -64,10 +67,10 @@ public class ItemController {
         return "edit-product";
     }
 
-    @GetMapping("/product/{category}/{id}/delete")
-    public String deleteProduct(@PathVariable Long id, @PathVariable Category category, Model model) {
-        productDeletionService.deleteProduct(id);
-        return "redirect:/category/" + category;
+    @GetMapping("/product/{categoryId}/{productId}/delete")
+    public String deleteProduct(@PathVariable Long productId, @PathVariable long categoryId, Model model) {
+        productDeletionService.deleteProduct(productId);
+        return "redirect:/category/" + categoryId;
     }
 
     @GetMapping("/product/create")

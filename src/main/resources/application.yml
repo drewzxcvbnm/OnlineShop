@@ -1,6 +1,8 @@
 spring:
+  profiles:
+    active: app
   datasource:
-#    url: jdbc:h2:mem:mockdb
+    #    url: jdbc:h2:mem:mockdb
     url: jdbc:h2:file:./testdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
     username: sa
     password: ""
@@ -11,6 +13,25 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/  #directly serve from src folder instead of target
+  resources:
+    static-locations: file:src/main/resources/static/ #directly serve from src folder instead of target cache:
+    cache:
+      period: 0
+
+---
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:mockdb
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/  #directly serve from src folder instead of target

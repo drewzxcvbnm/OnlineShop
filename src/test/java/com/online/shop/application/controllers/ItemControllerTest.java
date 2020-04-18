@@ -1,7 +1,9 @@
 package com.online.shop.application.controllers;
 
+import com.online.shop.application.TestBaseUtils;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
+import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.services.ProductDeletionService;
 import com.online.shop.application.services.ProductPersistenceService;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 
+import static com.online.shop.application.TestBaseUtils.COMPUTERS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -30,12 +33,16 @@ public class ItemControllerTest {
     private ProductDeletionService productDeletionService;
     @Mock
     private Model model;
+    @Mock
+    private CategoryRepo categoryRepo;
     @InjectMocks
     private ItemController itemController;
 
     @Test
     public void categoryProducts() {
-        assertThat(itemController.categoryProducts(Category.COMPUTERS, model))
+        Category c = new Category();
+        when(categoryRepo.getById(COMPUTERS.getId())).thenReturn(c);
+        assertThat(itemController.categoryProducts(COMPUTERS.getId(), model))
                 .isEqualTo("category-products");
         verify(model, times(3)).addAttribute(anyString(), any());
     }
@@ -78,8 +85,8 @@ public class ItemControllerTest {
 
     @Test
     public void deleteProduct() {
-        assertThat(itemController.deleteProduct(-1L, Category.COMPUTERS, model))
-                .isEqualTo("redirect:/category/COMPUTERS");
+        assertThat(itemController.deleteProduct(-1L, COMPUTERS.getId(), model))
+                .isEqualTo("redirect:/category/"+COMPUTERS.getId());
         verify(productDeletionService).deleteProduct(-1L);
     }
 

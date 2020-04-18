@@ -20,8 +20,8 @@ public class Purchase {
     @ManyToOne
     @JoinColumn
     private Order order;
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 
     public Purchase(Order order, Product product) {

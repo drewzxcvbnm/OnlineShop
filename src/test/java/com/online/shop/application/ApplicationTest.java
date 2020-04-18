@@ -1,6 +1,9 @@
 package com.online.shop.application;
 
 import com.online.shop.application.controllers.CartController;
+import com.online.shop.application.entities.Product;
+import com.online.shop.application.repositories.CategoryRepo;
+import com.online.shop.application.repositories.ProductRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,46 +12,57 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static com.online.shop.application.TestBaseUtils.COMPUTERS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
+@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @PropertySource("classpath:application.yml")
-@AutoConfigureMockMvc
 public class ApplicationTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
+    private ProductRepo productRepo;
+    @Autowired
+    private CategoryRepo categoryRepo;
+    @Autowired
     private CartController cartController;
     private MockHttpSession mockHttpSession = new MockHttpSession();
 
     @Test
+    @Transactional
     public void testBuying() throws Exception {
         getRequest("/");
-        getRequest("/category/COMPUTERS");
-        mockMvc.perform(post("/cart/add/" + 1L).session(mockHttpSession))
+        getRequest("/category/" + COMPUTERS.getId());
+        List<Product> products = categoryRepo.getById(COMPUTERS.getId()).getProducts();
+        mockMvc.perform(post("/cart/add/" + getIdOf(products, 0)).session(mockHttpSession))
                 .andExpect(status().isOk());
         assertThat(getRequest("/cart/size")).isEqualTo("1");
-        mockMvc.perform(post("/cart/add/" + 2L).session(mockHttpSession))
+        mockMvc.perform(post("/cart/add/" + getIdOf(products, 1)).session(mockHttpSession))
                 .andExpect(status().isOk());
         assertThat(getRequest("/cart/size")).isEqualTo("2");
         getRequest("/cart/clear");
-        mockMvc.perform(post("/cart/add/" + 2L).session(mockHttpSession))
+        mockMvc.perform(post("/cart/add/" + getIdOf(products, 1)).session(mockHttpSession))
                 .andExpect(status().isOk());
-        mockMvc.perform(post("/cart/add/" + 5L).session(mockHttpSession))
+        mockMvc.perform(post("/cart/add/" + getIdOf(products, 2)).session(mockHttpSession))
                 .andExpect(status().isOk());
         getRequest("/cart/content");
         getRequest("/cart/checkout");
@@ -68,7 +82,7 @@ public class ApplicationTest {
                 .param("username", "chadAdmin")
                 .param("password", "abc123"))
                 .andExpect(status().is3xxRedirection());
-        String input = Stream.of(getRequest("/category/COMPUTERS")
+        String input = Stream.of(getRequest("/category/" + COMPUTERS.getId())
                 .split("\\r?\\n"))
                 .filter(line -> line.contains("Apple MacBook Air 13"))
                 .findAny().orElseThrow(RuntimeException::new);
@@ -79,7 +93,7 @@ public class ApplicationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
         assertTrue(product.contains("Apple MacBook Air 13"));
-        mockMvc.perform(post("/product/4").session(mockHttpSession)
+        mockMvc.perform(post("/product/" + getIdOfProduct("Apple MacBook Air 13")).session(mockHttpSession)
                 .param("name", "Apple MacBook Air 13_modified_name")
                 .param("description", "Available in silver, space gray, and gold, the new thinner and lighter MacBook Air features a brilliant Retina display with True Tone technology, Touch ID, the latest-generation keyboard, and a Force Touch trackpad. The iconic wedge is created from 100 percent recycled aluminum, making it the greenest Mac ever.1 And with all-day battery life, MacBook Air is your perfectly portable, do-it-all notebook")
                 .param("price", "1299.99")
@@ -94,9 +108,17 @@ public class ApplicationTest {
                 .andReturn().getResponse()
                 .getContentAsString();
         assertTrue(product.contains("Apple MacBook Air 13_modified_name"));
-        getRequest("/product/COMPUTERS/" + productUrl.split("/")[2] + "/delete");
+        getRequest(String.format("/product/%s/%s/delete", COMPUTERS.getId(), productUrl.split("/")[2]));
         mockMvc.perform(get(productUrl))
                 .andExpect(status().is3xxRedirection());
+    }
+
+    private long getIdOfProduct(String productName) {
+        return productRepo.findAll().stream()
+                .filter(p -> p.getName().contains(productName))
+                .map(Product::getId)
+                .findAny()
+                .orElseThrow(RuntimeException::new);
     }
 
     private String getRequest(String url) throws Exception {
@@ -105,6 +127,10 @@ public class ApplicationTest {
         int st = mvcResult.getResponse().getStatus();
         assertTrue(st == HttpStatus.OK.value() || st == 302);
         return mvcResult.getResponse().getContentAsString();
+    }
+
+    private long getIdOf(List<Product> products, int i) {
+        return products.get(i).getId();
     }
 
 }

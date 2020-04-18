@@ -32,10 +32,10 @@ public class ProductRetrievalServiceTest {
 
     @Test
     public void getProductsByCategory() {
-        when(productRepo.findAllByCategory(Category.AUTOMOBILE))
-                .thenReturn(Collections.singletonList(new Product()));
         when(productMapper.toCategoryProductDto(any())).thenReturn(new CategoryProductDto());
-        assertThat(retrievalService.getProductsByCategory(Category.AUTOMOBILE).size())
+        Category category = new Category();
+        category.getProducts().add(new Product());
+        assertThat(retrievalService.getProductsByCategory(category).size())
                 .isEqualTo(1);
     }
 

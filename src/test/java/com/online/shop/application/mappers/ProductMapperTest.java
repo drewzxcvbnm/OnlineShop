@@ -1,8 +1,8 @@
 package com.online.shop.application.mappers;
 
+import com.online.shop.application.TestBaseUtils;
 import com.online.shop.application.dto.CategoryProductDto;
 import com.online.shop.application.dto.ProductDto;
-import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
 import org.junit.Test;
 
@@ -43,13 +43,15 @@ public class ProductMapperTest {
     public void toEntity() {
         ProductDto dto = expectedProductDto();
         Product product = productMapper.toEntity(dto);
-        assertThat(product).isEqualToComparingFieldByField(getProduct());
+        assertThat(product)
+                .usingRecursiveComparison()
+                .ignoringFields("category")
+                .isEqualTo(getProduct());
     }
 
     private ProductDto expectedProductDto() {
         ProductDto dto = new ProductDto();
         dto.setId(-1L);
-        dto.setCategory(Category.AUTOMOBILE);
         dto.setDescription("desc");
         dto.setName("n");
         dto.setProperties(Collections.singletonList("prop"));
@@ -69,7 +71,7 @@ public class ProductMapperTest {
     private Product getProduct() {
         return Product.builder()
                 .id(-1L)
-                .category(Category.AUTOMOBILE)
+                .category(TestBaseUtils.AUTOMOBILE)
                 .description("desc")
                 .price(BigDecimal.TEN)
                 .properties(Collections.singletonList("prop"))

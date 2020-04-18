@@ -1,6 +1,5 @@
 package com.online.shop.application.dto;
 
-import com.online.shop.application.entities.Category;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,5 +13,4 @@ public class ProductDto {
     private String description;
     private List<String> properties = new ArrayList<>();
     private BigDecimal price;
-    private Category category;
 }
