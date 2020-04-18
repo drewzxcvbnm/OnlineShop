@@ -25,6 +25,9 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        if (!productRepo.findAll().isEmpty()) {
+            return;
+        }
         productRepo.save(Product.builder().category(Category.PORTABLE_ELECTRONICS)
                 .name("Samsung Galaxy S10")
                 .description("Beautiful all-screen design and top-of-the-line processor. Samsung packed in tons of fun features: An ultrasonic fingerprint sensor! Wireless charging with power sharing! A headphone jack! Samsung UI has finally improved. Security updates are planned.")
