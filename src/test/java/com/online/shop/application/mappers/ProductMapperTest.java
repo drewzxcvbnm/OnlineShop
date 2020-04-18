@@ -75,6 +75,7 @@ public class ProductMapperTest {
                 .properties(Collections.singletonList("prop"))
                 .name("n")
                 .purchases(new ArrayList<>())
+                .reviews(new ArrayList<>())
                 .build();
     }
 

@@ -11,14 +11,13 @@ import javax.persistence.*;
 @ToString(of = {"id"})
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserInfo {
+
     @Id
     @GeneratedValue
     private Long id;
-    private String username;
-    private String password;
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
-    @OneToOne(optional = true)
-    private UserInfo userInfo;
+    private String name;
+    private String surname;
+    private String address;
+    private String bankAccount;
 }

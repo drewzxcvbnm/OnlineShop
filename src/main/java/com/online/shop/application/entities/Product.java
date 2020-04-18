@@ -30,4 +30,6 @@ public class Product {
     private BigDecimal price;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
     private List<Purchase> purchases = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
+    private List<ProductReview> reviews = new ArrayList<>();
 }
