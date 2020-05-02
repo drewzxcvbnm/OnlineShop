@@ -1,50 +1,27 @@
 package com.online.shop.application.mappers;
 
-import com.online.shop.application.dto.CategoryProductDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Product;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class ProductMapper {
+@Mapper
+public interface ProductMapper {
 
-    public CategoryProductDto toCategoryProductDto(Product product) {
-        CategoryProductDto categoryProductDto = new CategoryProductDto();
-        categoryProductDto.setId(product.getId());
-        categoryProductDto.setName(product.getName());
-        categoryProductDto.setDescription(product.getDescription());
-        categoryProductDto.setPrice(product.getPrice());
-        return categoryProductDto;
-    }
+    PartialProductDto toPartialProductDto(Product product);
 
-    public ProductDto toProductDto(Product product) {
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setDescription(product.getDescription());
-        productDto.setName(product.getName());
-        productDto.setPrice(product.getPrice());
-        productDto.setProperties(product.getProperties());
-        return productDto;
-    }
+    ProductDto toProductDto(Product product);
 
-    public Product updateEntity(Product entity, ProductDto dto) {
-        entity.setId(dto.getId());
-        entity.setDescription(dto.getDescription());
-        entity.setName(dto.getName());
-        entity.setPrice(dto.getPrice());
-        entity.setProperties(dto.getProperties());
-        return entity;
-    }
+    @Mapping(target = "reviews", ignore = true)
+    @Mapping(target = "purchases", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    void updateEntity(@MappingTarget Product entity, ProductDto dto);
 
-    public Product toEntity(ProductDto dto) {
-        Product entity = new Product();
-        entity.setId(dto.getId());
-        entity.setDescription(dto.getDescription());
-        entity.setName(dto.getName());
-        entity.setPrice(dto.getPrice());
-        entity.setProperties(dto.getProperties());
-        return entity;
-    }
-
+    @Mapping(target = "reviews", ignore = true)
+    @Mapping(target = "purchases", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    Product toEntity(ProductDto dto);
 
 }

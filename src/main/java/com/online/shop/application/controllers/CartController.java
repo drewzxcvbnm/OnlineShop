@@ -2,14 +2,16 @@ package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.services.CartService;
-import com.online.shop.application.services.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/cart")
@@ -17,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class CartController {
 
     private final CartService cartService;
-    private final ValidationService validationService;
 
     @GetMapping("/content")
     public String getCartContents(Model model) {
@@ -43,19 +44,16 @@ public class CartController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model) {
-        OrderDto orderDto = new OrderDto();
-        model.addAttribute("order", orderDto);
+    public String checkout(OrderDto order) {
         return "form-order";
     }
 
     @PostMapping("/submit")
-    public String submitOrder(@ModelAttribute OrderDto orderDto, Model model) {
-        if (!validationService.isValid(orderDto, model)) {
-            model.addAttribute("order", orderDto);
+    public String submitOrder(@ModelAttribute @Valid OrderDto order, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "form-order";
         }
-        cartService.submitOrder(orderDto);
+        cartService.submitOrder(order);
         model.addAttribute("showMessage", true);
         model.addAttribute("message", "Order has been successfully submitted");
         return "index";

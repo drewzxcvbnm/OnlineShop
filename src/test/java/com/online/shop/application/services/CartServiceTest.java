@@ -1,6 +1,6 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.CategoryProductDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
@@ -47,7 +47,7 @@ public class CartServiceTest {
     @Test
     public void getCartProducts() {
         when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
-        when(productMapper.toCategoryProductDto(any())).thenReturn(new CategoryProductDto());
+        when(productMapper.toPartialProductDto(any())).thenReturn(new PartialProductDto());
         cartService.addProductToCart(-1L);
         verify(productRepo).findById(-1L);
         assertThat(cartService.getCartProducts().size()).isEqualTo(1);
@@ -60,7 +60,7 @@ public class CartServiceTest {
 
         OrderDto dto = new OrderDto();
         Order order = new Order();
-        when(orderMapper.toEntity(dto)).thenReturn(order);
+        when(orderMapper.toOrder(dto)).thenReturn(order);
         when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
         cartService.submitOrder(dto);
         verify(orderRepo).save(order);

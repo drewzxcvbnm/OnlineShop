@@ -5,6 +5,7 @@ testdb.*
 out/
 .gradle
 /build/
+src/main/generated
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache

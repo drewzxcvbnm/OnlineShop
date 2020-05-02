@@ -1,6 +1,6 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.CategoryProductDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
@@ -39,17 +39,16 @@ public class CartService {
         cart.add(product);
     }
 
-    public List<CategoryProductDto> getCartProducts() {
+    public List<PartialProductDto> getCartProducts() {
         return cart.stream()
-                .map(productMapper::toCategoryProductDto)
+                .map(productMapper::toPartialProductDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public void submitOrder(OrderDto orderDto) {
-        Order order = orderMapper.toEntity(orderDto);
-        List<Purchase> purchasedProducts = getPurchasedProducts(order);
-        order.getPurchases().addAll(purchasedProducts);
+        Order order = orderMapper.toOrder(orderDto);
+        order.setPurchases(getPurchasedProducts(order));
         orderRepo.save(order);
         cart.clear();
     }

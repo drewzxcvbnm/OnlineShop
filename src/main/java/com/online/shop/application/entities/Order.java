@@ -23,6 +23,14 @@ public class Order {
     private String customerSurname;
     private String address;
     private String bankAccount;
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<Purchase> purchases = new ArrayList<>();
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases.clear();
+        this.purchases.addAll(purchases);
+        purchases.forEach(p -> p.setOrder(this));
+    }
+
 }

@@ -19,5 +19,6 @@ public class UserInfo {
     private String name;
     private String surname;
     private String address;
+    private String phoneNumber;
     private String bankAccount;
 }
