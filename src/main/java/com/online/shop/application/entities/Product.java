@@ -29,8 +29,10 @@ public class Product {
     @ManyToOne(optional = false)
     @JoinColumn
     private Category category;
+    @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
     private List<Purchase> purchases = new ArrayList<>();
+    @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")
     private List<ProductReview> reviews = new ArrayList<>();
 }

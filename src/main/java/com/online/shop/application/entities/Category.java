@@ -20,6 +20,7 @@ public class Category {
     private Long id;
     private String img;
     private String displayName;
+    @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 

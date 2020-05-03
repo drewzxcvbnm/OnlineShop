@@ -2,18 +2,14 @@ package com.online.shop.application.mappers;
 
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.Order;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class OrderMapper {
+@Mapper
+public interface OrderMapper {
 
-    public Order toEntity(OrderDto dto) {
-        Order order = new Order();
-        order.setAddress(dto.getAddress());
-        order.setBankAccount(dto.getBankAccount());
-        order.setCustomerName(dto.getCustomerName());
-        order.setCustomerSurname(dto.getCustomerSurname());
-        return order;
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "purchases", ignore = true)
+    Order toOrder(OrderDto dto);
 
 }

@@ -1,8 +1,10 @@
 package com.online.shop.application;
 
 import com.online.shop.application.controllers.CartController;
+import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.repositories.CategoryRepo;
+import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,8 @@ public class ApplicationTest {
     @Autowired
     private CategoryRepo categoryRepo;
     @Autowired
+    private OrderRepo orderRepo;
+    @Autowired
     private CartController cartController;
     private MockHttpSession mockHttpSession = new MockHttpSession();
 
@@ -72,6 +76,15 @@ public class ApplicationTest {
                 .param("address", "Visku 1")
                 .param("bankAccount", "IBAN12321412"))
                 .andExpect(status().isOk());
+        List<Order> orders = orderRepo.findAll();
+        assertThat(orders).size().isEqualTo(1);
+        Order expected = expectedOrder(products);
+        Order actual = orders.get(0);
+        assertThat(actual.getPurchases()).size().isEqualTo(2);
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .ignoringFields("id", "purchases")
+                .isEqualTo(expected);
         assertThat(getRequest("/cart/size")).isEqualTo("0");
     }
 
@@ -132,5 +145,15 @@ public class ApplicationTest {
     private long getIdOf(List<Product> products, int i) {
         return products.get(i).getId();
     }
+
+    private Order expectedOrder(List<Product> products) {
+        Order order = new Order();
+        order.setAddress("Visku 1");
+        order.setBankAccount("IBAN12321412");
+        order.setCustomerName("Andris");
+        order.setCustomerSurname("Zacs");
+        return order;
+    }
+
 
 }

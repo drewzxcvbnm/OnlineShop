@@ -2,13 +2,13 @@ package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.services.CartService;
-import com.online.shop.application.services.ValidationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,7 +24,7 @@ public class CartControllerTest {
     @Mock
     private Model model;
     @Mock
-    private ValidationService validationService;
+    private BindingResult bindingResult;
     @InjectMocks
     private CartController cartController;
 
@@ -56,25 +56,25 @@ public class CartControllerTest {
 
     @Test
     public void checkout() {
-        assertThat(cartController.checkout(model)).isEqualTo("form-order");
-        verify(model).addAttribute(eq("order"), any());
+        assertThat(cartController.checkout(new OrderDto())).isEqualTo("form-order");
     }
 
     @Test
     public void submitOrderInvalid() {
         OrderDto orderDto = new OrderDto();
-        assertThat(cartController.submitOrder(orderDto, model)).isEqualTo("form-order");
-        verify(validationService).isValid(any(), eq(model));
+        when(bindingResult.hasErrors()).thenReturn(true);
+        assertThat(cartController.submitOrder(orderDto, bindingResult, model)).isEqualTo("form-order");
+        verify(bindingResult).hasErrors();
     }
 
     @Test
     public void submitOrderValid() {
         OrderDto orderDto = new OrderDto();
-        when(validationService.isValid(orderDto, model)).thenReturn(true);
-        assertThat(cartController.submitOrder(orderDto, model)).isEqualTo("index");
-        verify(validationService).isValid(any(), eq(model));
+        when(bindingResult.hasErrors()).thenReturn(false);
+        assertThat(cartController.submitOrder(orderDto, bindingResult, model)).isEqualTo("index");
         verify(cartService).submitOrder(orderDto);
         verify(model).addAttribute(eq("showMessage"), any());
         verify(model).addAttribute(eq("message"), any());
+        verify(bindingResult).hasErrors();
     }
 }

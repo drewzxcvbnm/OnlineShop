@@ -3,6 +3,7 @@ package com.online.shop.application.mappers;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.Order;
 import org.junit.Test;
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderMapperTest {
 
-    private OrderMapper orderMapper = new OrderMapper();
+    private OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
 
     @Test
     public void toEntity() {
@@ -19,7 +20,7 @@ public class OrderMapperTest {
         orderDto.setBankAccount("bc");
         orderDto.setCustomerName("cn");
         orderDto.setCustomerSurname("cs");
-        assertThat(orderMapper.toEntity(orderDto))
+        assertThat(orderMapper.toOrder(orderDto))
                 .isEqualToComparingFieldByField(expected());
     }
 

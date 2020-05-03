@@ -1,10 +1,11 @@
 package com.online.shop.application.mappers;
 
 import com.online.shop.application.TestBaseUtils;
-import com.online.shop.application.dto.CategoryProductDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Product;
 import org.junit.Test;
+import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductMapperTest {
 
-    private ProductMapper productMapper = new ProductMapper();
+    private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     @Test
     public void toCategoryProductDto() {
         Product product = getProduct();
-        CategoryProductDto dto = productMapper.toCategoryProductDto(product);
+        PartialProductDto dto = productMapper.toPartialProductDto(product);
         assertThat(dto).isEqualToComparingFieldByField(expectedCategoryProductDto());
     }
 
@@ -54,18 +55,18 @@ public class ProductMapperTest {
         dto.setId(-1L);
         dto.setDescription("desc");
         dto.setName("n");
-        dto.setProperties(Collections.singletonList("prop"));
+        dto.setProperties(new ArrayList<>(Collections.singletonList("prop")));
         dto.setPrice(BigDecimal.TEN);
         return dto;
     }
 
-    private CategoryProductDto expectedCategoryProductDto() {
-        CategoryProductDto categoryProductDto = new CategoryProductDto();
-        categoryProductDto.setId(-1L);
-        categoryProductDto.setName("n");
-        categoryProductDto.setDescription("desc");
-        categoryProductDto.setPrice(BigDecimal.TEN);
-        return categoryProductDto;
+    private PartialProductDto expectedCategoryProductDto() {
+        PartialProductDto partialProductDto = new PartialProductDto();
+        partialProductDto.setId(-1L);
+        partialProductDto.setName("n");
+        partialProductDto.setDescription("desc");
+        partialProductDto.setPrice(BigDecimal.TEN);
+        return partialProductDto;
     }
 
     private Product getProduct() {
@@ -74,7 +75,7 @@ public class ProductMapperTest {
                 .category(TestBaseUtils.AUTOMOBILE)
                 .description("desc")
                 .price(BigDecimal.TEN)
-                .properties(Collections.singletonList("prop"))
+                .properties(new ArrayList<>(Collections.singletonList("prop")))
                 .name("n")
                 .purchases(new ArrayList<>())
                 .reviews(new ArrayList<>())

@@ -1,6 +1,6 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.CategoryProductDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.exceptions.ItemNotFoundException;
@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +31,7 @@ public class ProductRetrievalServiceTest {
 
     @Test
     public void getProductsByCategory() {
-        when(productMapper.toCategoryProductDto(any())).thenReturn(new CategoryProductDto());
+        when(productMapper.toPartialProductDto(any())).thenReturn(new PartialProductDto());
         Category category = new Category();
         category.getProducts().add(new Product());
         assertThat(retrievalService.getProductsByCategory(category).size())
