@@ -3,6 +3,8 @@ package com.online.shop.application.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +24,6 @@ public class User {
     private Authority authority;
     @OneToOne(optional = true)
     private UserInfo userInfo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ProductReview> productReviews = new ArrayList<>();
 }

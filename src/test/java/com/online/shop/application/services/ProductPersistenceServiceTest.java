@@ -4,6 +4,7 @@ import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.mappers.ProductMapper;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.services.product.ProductPersistenceService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

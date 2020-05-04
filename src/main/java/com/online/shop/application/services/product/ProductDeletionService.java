@@ -1,4 +1,4 @@
-package com.online.shop.application.services;
+package com.online.shop.application.services.product;
 
 import com.online.shop.application.repositories.ProductRepo;
 import lombok.RequiredArgsConstructor;

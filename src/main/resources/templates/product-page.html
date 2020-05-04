@@ -34,15 +34,28 @@
         <img class="ico" style="margin-left: 10px;" src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
     </a>
 </div>
-<div style="display: flex;align-items: center">
-    <h1 th:text="${product.getName()}" style="flex-grow: 3"></h1>
-    <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'"></div>
-    <input onclick="addToCart()" type="button" value="Add to cart" style="flex-grow: 1;font-size: large">
+<div style="margin: 20px 20px">
+    <div style="display: flex;align-items: center">
+        <h1 th:text="${product.getName()}" style="flex-grow: 3"></h1>
+        <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'"></div>
+        <input onclick="addToCart()" type="button" class="btn btn-primary" value="Add to cart">
+    </div>
+    <div th:text="${product.getDescription()}" style="font-size: large"></div>
+    <br>
+    <ul th:each="property : ${product.getProperties()}">
+        <li th:text="${property}"></li>
+    </ul>
+
+    <hr/>
+
+    <h3>Product reviews:</h3>
+    <ul th:each="review : ${product.getReviews()}">
+        <li>
+            <div th:text="'Author: '+${review.author}"></div>
+            <div th:text="'Rating: '+${review.rating}+'/10'"></div>
+            <div th:text="${review.content}"></div>
+        </li>
+    </ul>
 </div>
-<div th:text="${product.getDescription()}" style="font-size: large"></div>
-<br>
-<ul th:each="property : ${product.getProperties()}">
-    <li th:text="${property}"></li>
-</ul>
 </body>
 </html>

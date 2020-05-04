@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(uses = {ReviewMapper.class})
 public interface ProductMapper {
 
     PartialProductDto toPartialProductDto(Product product);

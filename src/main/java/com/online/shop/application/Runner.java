@@ -1,9 +1,6 @@
 package com.online.shop.application;
 
-import com.online.shop.application.entities.Authority;
-import com.online.shop.application.entities.Category;
-import com.online.shop.application.entities.Product;
-import com.online.shop.application.entities.User;
+import com.online.shop.application.entities.*;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
@@ -13,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,12 +39,19 @@ public class Runner implements CommandLineRunner {
         Category cosmetics = new Category("cm.png", "Cosmetics");
         List<Category> categoryList = Arrays.asList(portableElectronics, computers, videoGames, automobile, furniture, householdAppliances, clothes, cosmetics);
         categoryRepo.saveAll(categoryList);
-        productRepo.save(Product.builder().category(portableElectronics)
+        User normalUser = User.builder().authority(Authority.USER).username("typicalUser").password(hash("strongPassword")).build();
+        userRepo.save(normalUser);
+        User user = User.builder().authority(Authority.ADMIN).username("chadAdmin").password(hash("abc123")).build();
+        userRepo.save(user);
+        Product samsungGalaxyS10 = Product.builder().category(portableElectronics)
                 .name("Samsung Galaxy S10")
                 .description("Beautiful all-screen design and top-of-the-line processor. Samsung packed in tons of fun features: An ultrasonic fingerprint sensor! Wireless charging with power sharing! A headphone jack! Samsung UI has finally improved. Security updates are planned.")
                 .price(new BigDecimal("899.99"))
                 .properties(Arrays.asList("Weight: 157g.", "Dimensions: 149.9 x 70.4 x 7.8mm.", "OS: Android 9.", "CPU: Octa-core chipset.", "RAM: 8GB.", "Storage: 128/512GB."))
-                .build());
+                .build();
+        samsungGalaxyS10.getReviews().add(phoneReview(8, normalUser, samsungGalaxyS10, "The Galaxy S10 is a fitting 10th anniversary phone for Samsung and its storied S series. It delivers on change with a novel-looking Infinity-O screen so large it displaces the front camera, and a triple-lens rear camera that takes ultra-wide photos. Its in-screen fingerprint sensor tech should serve you well, while its Wireless PowerShare could serve your friends well. That’s a lot of change – just know that it comes at a high price and the Galaxy S10e and S10 Plus flank it from both sides of the coin as better options."));
+        samsungGalaxyS10.getReviews().add(phoneReview(7, user, samsungGalaxyS10, "The Samsung Galaxy S10 is an all-round great phone that thankfully keeps things at a manageable size. It still has a big, beautiful screen that’s great for watching videos, but it doesn’t make your hand hurt holding it.\n Performance is good, the camera’s good and the software is the start of a rethink of how we use big phones. The ultrasonic fingerprint scanner works well enough too and there’s even a headphone socket."));
+        productRepo.save(samsungGalaxyS10);
         productRepo.save(Product.builder().category(portableElectronics)
                 .name("iPhone 11")
                 .description("The iPhone 11 succeeds the iPhone XR, and it features a 6.1-inch LCD display that Apple calls a \"Liquid Retina HD Display.\" It features a 1792 x 828 resolution at 326ppi, a 1400:1 contrast ratio, 625 nits max brightness, True Tone support for adjusting the white balance to the ambient lighting, and wide color support for true-to-life colors.")
@@ -82,8 +87,16 @@ public class Runner implements CommandLineRunner {
             genericProduct.setCategory(value);
             productRepo.save(genericProduct);
         }
-        userRepo.save(User.builder().authority(Authority.USER).username("typicalUser").password(hash("strongPassword")).build());
-        userRepo.save(User.builder().authority(Authority.ADMIN).username("chadAdmin").password(hash("abc123")).build());
+    }
+
+    private ProductReview phoneReview(int rating, User user, Product product, String content) {
+        ProductReview review = new ProductReview();
+        review.setUser(user);
+        review.setProduct(product);
+        review.setDateOfCreation(LocalDate.now());
+        review.setRating(rating);
+        review.setContent(content);
+        return review;
     }
 
     private String hash(String pass) {

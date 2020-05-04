@@ -1,13 +1,12 @@
 package com.online.shop.application.controllers;
 
-import com.online.shop.application.TestBaseUtils;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
-import com.online.shop.application.services.ProductDeletionService;
-import com.online.shop.application.services.ProductPersistenceService;
-import com.online.shop.application.services.ProductRetrievalService;
+import com.online.shop.application.services.product.ProductDeletionService;
+import com.online.shop.application.services.product.ProductPersistenceService;
+import com.online.shop.application.services.product.ProductRetrievalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
