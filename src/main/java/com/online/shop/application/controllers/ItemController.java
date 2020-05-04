@@ -1,6 +1,7 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.ProductDto;
+import com.online.shop.application.dto.ReviewDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.repositories.CategoryRepo;
@@ -39,6 +40,7 @@ public class ItemController {
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
         model.addAttribute(PRODUCT, productRetrievalService.getProduct(id));
+        model.addAttribute("reviewDto", new ReviewDto());
         return "product-page";
     }
 

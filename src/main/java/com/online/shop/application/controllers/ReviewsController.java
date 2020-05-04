@@ -1,8 +1,8 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.ReviewDto;
-import com.online.shop.application.services.product.ProductRetrievalService;
 import com.online.shop.application.services.ReviewService;
+import com.online.shop.application.services.product.ProductRetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,9 @@ public class ReviewsController {
     public String saveReview(@Valid ReviewDto reviewDto, BindingResult result,
                              @PathVariable Long productId, Model model) {
         if (!result.hasErrors()) {
+            model.addAttribute("reviewDto", new ReviewDto());
             reviewService.saveReview(reviewDto, productId);
+            return "redirect:/product/" + productId;
         }
         model.addAttribute(PRODUCT, productRetrievalService.getProduct(productId));
         return "product-page";

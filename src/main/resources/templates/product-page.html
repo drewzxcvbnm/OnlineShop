@@ -35,12 +35,11 @@
     </a>
 </div>
 <div style="margin: 20px 20px">
-    <div style="display: flex;align-items: center">
-        <h1 th:text="${product.getName()}" style="flex-grow: 3"></h1>
-        <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'"></div>
-        <input onclick="addToCart()" type="button" class="btn btn-primary" value="Add to cart">
-    </div>
-    <div th:text="${product.getDescription()}" style="font-size: large"></div>
+    <input onclick="addToCart()" type="button" class="btn btn-primary" value="Add to cart"
+           style="float: right;width: 15%">
+    <h1 th:text="${product.getName()}"></h1>
+    <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'" style="text-align: left"></div>
+    <div th:text="${product.getDescription()}" style="font-size: large;margin-top: 15px"></div>
     <br>
     <ul th:each="property : ${product.getProperties()}">
         <li th:text="${property}"></li>
@@ -50,12 +49,27 @@
 
     <h3>Product reviews:</h3>
     <ul th:each="review : ${product.getReviews()}">
-        <li>
+        <li style="border: darkgrey">
             <div th:text="'Author: '+${review.author}"></div>
             <div th:text="'Rating: '+${review.rating}+'/10'"></div>
             <div th:text="${review.content}"></div>
         </li>
     </ul>
+    <form sec:authorize="isAuthenticated()" th:object="${reviewDto}"
+          th:action="@{/product/review/{productId}(productId=${product.getId()})}" method="post"
+          style="font-size: larger;margin-top: 40px">
+        <div th:text="'Author: '+${#authentication.getPrincipal().getUsername()}" th:field="*{author}"></div>
+        <div style="display: flex;align-items: baseline;align-content: space-around">
+            <label style="margin-right: 5px">Rating: </label>
+            <input th:field="*{rating}" maxlength="2" class="form-control" type="text"
+                   th:errorclass="border-danger"
+                   style="width: 30px;height: 25px;text-align: center;padding: 0px"><span
+                style="margin-left: 5px">/10</span>
+        </div>
+        <textarea class="form-control" style="height: 80px" th:errorclass="border-danger"
+                  th:field="*{content}"></textarea>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px">Submit review</button>
+    </form>
 </div>
 </body>
 </html>
