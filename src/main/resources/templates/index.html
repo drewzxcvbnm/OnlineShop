@@ -13,7 +13,7 @@
 </div>
 <h1>Product Catalog:</h1>
 <table class="table">
-    <tr class="clickable" th:each="category : ${categories}">
+    <tr class="clickable" th:each="category : ${@categoriesManager.getAllCategories()}">
         <td><img id="category-img" class="rounded mx-auto d-block" th:src="@{/images/{img}(img=${category.getImg()})}">
         </td>
         <td id="category-name"><a th:text="${category.getDisplayName()}"

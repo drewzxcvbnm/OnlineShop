@@ -11,6 +11,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class ProductDto extends PartialProductDto {
+    private CategoryDto category;
     private List<String> properties = new ArrayList<>();
     private List<ReviewDto> reviews = new ArrayList<>();
 }

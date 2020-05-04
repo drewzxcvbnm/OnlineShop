@@ -56,8 +56,8 @@ public class ItemControllerTest {
     @Test
     public void saveProduct() {
         ProductDto dto = new ProductDto();
-        assertThat(itemController.saveProduct(-1L, dto, model))
-                .isEqualTo("product-page");
+        assertThat(itemController.updateProduct(-1L, dto, model))
+                .isEqualTo("redirect:/product/-1");
         verify(productPersistenceService).updateProduct(-1L, dto);
         verify(model).addAttribute(eq("product"), any());
     }

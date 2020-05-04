@@ -60,10 +60,13 @@
         <label>Price: </label>
         <input step=".01" type="number" class="form-control" th:field="*{price}">
     </div>
-    <select th:field="*{category}" th:value="*{category}" class="form-control">
-        <option th:value="${cat}" th:text="${cat}"
-                th:each="cat : ${T(com.online.shop.application.entities.Category).values()}"></option>
-    </select>
+    <div class="form-group">
+        <label>Product category: </label>
+        <select th:field="*{category.id}" th:value="*{category}" class="form-control">
+            <option th:value="${cat.id}" th:text="${cat.displayName}"
+                    th:each="cat : ${@categoriesManager.getAllCategoryDtos()}"></option>
+        </select>
+    </div>
     <div class="form-group">
         <label>Properties: </label>
         <ul class="list-group" id="property-list">

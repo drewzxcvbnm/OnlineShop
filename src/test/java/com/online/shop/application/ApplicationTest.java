@@ -110,13 +110,13 @@ public class ApplicationTest {
                 .param("name", "Apple MacBook Air 13_modified_name")
                 .param("description", "Available in silver, space gray, and gold, the new thinner and lighter MacBook Air features a brilliant Retina display with True Tone technology, Touch ID, the latest-generation keyboard, and a Force Touch trackpad. The iconic wedge is created from 100 percent recycled aluminum, making it the greenest Mac ever.1 And with all-day battery life, MacBook Air is your perfectly portable, do-it-all notebook")
                 .param("price", "1299.99")
-                .param("category", "COMPUTERS")
+                .param("category.id", String.valueOf(COMPUTERS.getId()))
                 .param("properties", "Display: Retina display with True Tone")
                 .param("properties", "Processor: 1.6GHz dual-core 8th-generation Intel Core i5 processor with Turbo Boost up to 3.6GHz")
                 .param("properties", "Storage: 128GB SSD storage")
                 .param("properties", "Graphics: Intel UHD Graphics 617")
                 .session(mockHttpSession))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
         product = mockMvc.perform(get(productUrl))
                 .andReturn().getResponse()
                 .getContentAsString();

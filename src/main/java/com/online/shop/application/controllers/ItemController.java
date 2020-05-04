@@ -45,12 +45,12 @@ public class ItemController {
     }
 
     @PostMapping("/product/{id}")
-    public String saveProduct(@PathVariable Long id,
-                              @ModelAttribute ProductDto dto,
-                              Model model) {
+    public String updateProduct(@PathVariable Long id,
+                                @ModelAttribute ProductDto dto,
+                                Model model) {
         Product product = productPersistenceService.updateProduct(id, dto);
         model.addAttribute(PRODUCT, product);
-        return "product-page";
+        return "redirect:/product/" + id;
     }
 
     @PostMapping("/product/save")
