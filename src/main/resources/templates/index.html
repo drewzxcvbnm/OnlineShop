@@ -13,11 +13,14 @@
 </div>
 <h1>Product Catalog:</h1>
 <table class="table">
-    <tr class="clickable" th:each="category : ${@categoriesManager.getAllCategories()}">
+    <tr class="clickable" th:onclick="'javascript:document.getElementById('+${category.id}+').click()'"
+        th:each="category : ${@categoriesManager.getAllCategories()}">
         <td><img id="category-img" class="rounded mx-auto d-block" th:src="@{/images/{img}(img=${category.getImg()})}">
         </td>
-        <td id="category-name"><a th:text="${category.getDisplayName()}"
-                                  th:href="@{/category/{cat}(cat=${category.id})}"></a></td>
+        <td id="category-name">
+            <a th:id="${category.id}" th:text="${category.getDisplayName()}"
+               th:href="@{/category/{cat}(cat=${category.id})}"></a>
+        </td>
     </tr>
 </table>
 </body>

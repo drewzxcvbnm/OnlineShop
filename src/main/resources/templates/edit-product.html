@@ -14,6 +14,15 @@
     <script>
         idNum = [[${product.getProperties().size()}]]
 
+        function updateNames() {
+            var list = document.getElementById("property-list");
+            var items = list.getElementsByTagName("li");
+            for (i = 0; i < items.length; i++) {
+                items[i].getElementsByTagName("input")[0]
+                    .setAttribute("name", "properties[" + i + "]");
+            }
+        }
+
         function addProperty() {
             id = idNum++;
             var list = document.getElementById("property-list");
@@ -22,10 +31,10 @@
             var img = document.createElement("img")
             img.setAttribute("src", "https://image.flaticon.com/icons/svg/59/59836.svg")
             img.setAttribute("onclick", "removeProperty(" + id + ")")
-            img.setAttribute("style", "margin-right: 10px;cursor: pointer")
+            img.setAttribute("style", "margin-right: 10px;cursor: pointer;opacity: 0.5")
             img.classList.add("ico-sm")
             inp.setAttribute("type", "text")
-            inp.setAttribute("name", "properties")
+            inp.setAttribute("name", "properties[" + -1 + "]")
             inp.setAttribute("th:value", "${property}")
             inp.classList.add("form-control")
             li.classList.add("list-group-item")
@@ -34,11 +43,13 @@
             li.appendChild(inp)
             li.setAttribute("style", "display: flex;align-items: center")
             list.insertBefore(li, list.childNodes[list.childNodes.length - 2])
+            updateNames()
         }
 
         function removeProperty(i) {
             var elementById = document.getElementById("property-list");
             elementById.removeChild(document.getElementById("property-" + i));
+            updateNames()
         }
     </script>
 </head>
@@ -50,15 +61,16 @@
       method="post">
     <div class="form-group">
         <label>Name: </label>
-        <input type="text" class="form-control" th:field="*{name}">
+        <input type="text" class="form-control" th:field="*{name}" th:errorclass="border-danger">
     </div>
     <div class="form-group">
         <label>Description:</label>
-        <textarea style="height: auto" class="form-control" rows="5" th:field="*{description}"></textarea>
+        <textarea style="height: auto" class="form-control" rows="5" th:field="*{description}"
+                  th:errorclass="border-danger"></textarea>
     </div>
     <div class="form-group">
         <label>Price: </label>
-        <input step=".01" type="number" class="form-control" th:field="*{price}">
+        <input th:errorclass="border-danger" step=".01" type="number" class="form-control" th:field="*{price}">
     </div>
     <div class="form-group">
         <label>Product category: </label>
@@ -73,18 +85,20 @@
             <li th:id="'property-'+${iter.index}" style="display: flex;align-items: center" class="list-group-item"
                 th:each="property,iter : *{properties}">
                 <img th:onclick="removeProperty([[${iter.index}]])" class="ico-sm"
-                     style="margin-right: 10px;cursor: pointer"
+                     style="margin-right: 10px;cursor: pointer;opacity: 0.5"
                      src="https://image.flaticon.com/icons/svg/59/59836.svg"/>
-                <input type="text" name="properties" class="form-control" th:value="${property}">
+                <input th:errorclass="border-danger" type="text" name="properties" class="form-control"
+                       th:value="${property}" th:field="*{properties[__${iter.index}__]}">
             </li>
-            <li class="list-group-item clickable" style="vertical-align: middle;cursor: pointer"
-                onclick="addProperty()"><img
-                    th:src="@{/images/pls.png}" class="ico" aria-hidden="true">
+            <li class="list-group-item clickable" style="display: flex;align-items: center;cursor: pointer"
+                onclick="addProperty()">
+                <img th:src="@{/images/pls.png}" class="ico"
+                     style="opacity: 0.3;width: 15px;height: 15px;margin-bottom: 4px" aria-hidden="true">
                 <span style="margin-left: 10px;">Add to List</span>
             </li>
         </ul>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" style="margin-bottom: 50px">Submit</button>
 </form>
 </body>
 </html>
