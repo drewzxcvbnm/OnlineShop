@@ -3,9 +3,11 @@ package com.online.shop.application;
 import com.online.shop.application.controllers.CartController;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
+import com.online.shop.application.entities.ProductReview;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
+import org.hibernate.Hibernate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,6 +46,8 @@ public class ApplicationTest {
     private MockMvc mockMvc;
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
     @Autowired
     private CategoryRepo categoryRepo;
     @Autowired
@@ -124,6 +129,32 @@ public class ApplicationTest {
         getRequest(String.format("/product/%s/%s/delete", COMPUTERS.getId(), productUrl.split("/")[2]));
         mockMvc.perform(get(productUrl))
                 .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    public void testProductReview() throws Exception {
+        mockMvc.perform(post("/login").session(mockHttpSession)
+                .param("username", "typicalUser")
+                .param("password", "strongPassword"))
+                .andExpect(status().is3xxRedirection());
+        long appleBookId = getIdOfProduct("Apple MacBook Air 13");
+        mockMvc.perform(post("/product/review/" + appleBookId).session(mockHttpSession)
+                .param("rating", "0")
+                .param("content", "good stuff")
+                .session(mockHttpSession))
+                .andExpect(status().is2xxSuccessful());
+        mockMvc.perform(post("/product/review/" + appleBookId).session(mockHttpSession)
+                .param("rating", "10")
+                .param("content", "good stuff")
+                .session(mockHttpSession))
+                .andExpect(status().is3xxRedirection());
+        final ProductReview[] review = new ProductReview[1];
+        transactionTemplate.execute(s -> {
+            review[0] = productRepo.getById(appleBookId).getReviews().get(0);
+            return null;
+        });
+        assertThat(review[0].getRating()).isEqualTo(10);
+        assertThat(review[0].getContent()).isEqualTo("good stuff");
     }
 
     private long getIdOfProduct(String productName) {

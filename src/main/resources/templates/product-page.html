@@ -25,16 +25,25 @@
             }
             alert("Successfully added to cart")
         }
+
+        function clickLink(linkId) {
+            document.getElementById(linkId).click()
+        }
     </script>
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<div sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/product/{productId}/edit(productId=${product.getId()})}">
-        <img class="ico" style="margin-left: 10px;" src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
-    </a>
-</div>
 <div style="margin: 20px 20px">
+    <div sec:authorize="hasRole('ADMIN')" style="display: flex;justify-content: flex-end;margin-bottom: 10px">
+        <div onclick="clickLink('edit-link')" style="width: 80px;height: 30px;display: flex;align-items: center"
+             class="btn btn-secondary">
+            <span style="color: black">Edit</span>
+            <a id="edit-link" th:href="@{/product/{productId}/edit(productId=${product.getId()})}">
+                <img class="ico" style="margin-left: 10px;"
+                     src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
+            </a>
+        </div>
+    </div>
     <input onclick="addToCart()" type="button" class="btn btn-primary" value="Add to cart"
            style="float: right;width: 15%">
     <h1 th:text="${product.getName()}"></h1>
