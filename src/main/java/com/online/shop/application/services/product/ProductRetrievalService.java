@@ -1,4 +1,4 @@
-package com.online.shop.application.services;
+package com.online.shop.application.services.product;
 
 import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.ProductDto;

@@ -25,24 +25,60 @@
             }
             alert("Successfully added to cart")
         }
+
+        function clickLink(linkId) {
+            document.getElementById(linkId).click()
+        }
     </script>
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<div sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/product/{productId}/edit(productId=${product.getId()})}">
-        <img class="ico" style="margin-left: 10px;" src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
-    </a>
+<div style="margin: 20px 20px">
+    <div sec:authorize="hasRole('ADMIN')" style="display: flex;justify-content: flex-end;margin-bottom: 10px">
+        <div onclick="clickLink('edit-link')" style="width: 80px;height: 30px;display: flex;align-items: center"
+             class="btn btn-secondary">
+            <span style="color: black">Edit</span>
+            <a id="edit-link" th:href="@{/product/{productId}/edit(productId=${product.getId()})}">
+                <img class="ico" style="margin-left: 10px;"
+                     src="https://image.flaticon.com/icons/png/512/84/84380.png"/>
+            </a>
+        </div>
+    </div>
+    <input onclick="addToCart()" type="button" class="btn btn-primary" value="Add to cart"
+           style="float: right;width: 15%">
+    <h1 th:text="${product.getName()}"></h1>
+    <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'" style="text-align: left"></div>
+    <div th:text="${product.getDescription()}" style="font-size: large;margin-top: 15px"></div>
+    <br>
+    <ul th:each="property : ${product.getProperties()}">
+        <li th:text="${property}"></li>
+    </ul>
+
+    <hr/>
+
+    <h3>Product reviews:</h3>
+    <ul th:each="review : ${product.getReviews()}">
+        <li style="border: darkgrey">
+            <div th:text="'Author: '+${review.author}"></div>
+            <div th:text="'Rating: '+${review.rating}+'/10'"></div>
+            <div th:text="${review.content}"></div>
+        </li>
+    </ul>
+    <form sec:authorize="isAuthenticated()" th:object="${reviewDto}"
+          th:action="@{/product/review/{productId}(productId=${product.getId()})}" method="post"
+          style="font-size: larger;margin-top: 40px">
+        <div th:text="'Author: '+${#authentication.getPrincipal().getUsername()}" th:field="*{author}"></div>
+        <div style="display: flex;align-items: baseline;align-content: space-around">
+            <label style="margin-right: 5px">Rating: </label>
+            <input th:field="*{rating}" maxlength="2" class="form-control" type="text"
+                   th:errorclass="border-danger"
+                   style="width: 30px;height: 25px;text-align: center;padding: 0px"><span
+                style="margin-left: 5px">/10</span>
+        </div>
+        <textarea class="form-control" style="height: 80px" th:errorclass="border-danger"
+                  th:field="*{content}"></textarea>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px">Submit review</button>
+    </form>
 </div>
-<div style="display: flex;align-items: center">
-    <h1 th:text="${product.getName()}" style="flex-grow: 3"></h1>
-    <div id="price-tag" th:text="'Price: '+${product.getPrice()}+'$'"></div>
-    <input onclick="addToCart()" type="button" value="Add to cart" style="flex-grow: 1;font-size: large">
-</div>
-<div th:text="${product.getDescription()}" style="font-size: large"></div>
-<br>
-<ul th:each="property : ${product.getProperties()}">
-    <li th:text="${property}"></li>
-</ul>
 </body>
 </html>

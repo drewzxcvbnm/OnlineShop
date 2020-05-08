@@ -26,8 +26,8 @@ public class Product {
     private String description;
     @ElementCollection
     private List<String> properties = new ArrayList<>();
-    @ManyToOne(optional = false)
     @JoinColumn
+    @ManyToOne(optional = false)
     private Category category;
     @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "product")

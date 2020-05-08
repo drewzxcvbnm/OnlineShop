@@ -1,20 +1,24 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.ProductDto;
+import com.online.shop.application.dto.ReviewDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
-import com.online.shop.application.services.ProductDeletionService;
-import com.online.shop.application.services.ProductPersistenceService;
-import com.online.shop.application.services.ProductRetrievalService;
+import com.online.shop.application.services.product.ProductDeletionService;
+import com.online.shop.application.services.product.ProductPersistenceService;
+import com.online.shop.application.services.product.ProductRetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,16 +43,21 @@ public class ItemController {
     @GetMapping("/product/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
         model.addAttribute(PRODUCT, productRetrievalService.getProduct(id));
+        model.addAttribute("reviewDto", new ReviewDto());
         return "product-page";
     }
 
     @PostMapping("/product/{id}")
-    public String saveProduct(@PathVariable Long id,
-                              @ModelAttribute ProductDto dto,
-                              Model model) {
+    public String updateProduct(@PathVariable Long id,
+                                @ModelAttribute(PRODUCT) @Valid ProductDto dto,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            return "edit-product";
+        }
         Product product = productPersistenceService.updateProduct(id, dto);
         model.addAttribute(PRODUCT, product);
-        return "product-page";
+        return "redirect:/product/" + id;
     }
 
     @PostMapping("/product/save")

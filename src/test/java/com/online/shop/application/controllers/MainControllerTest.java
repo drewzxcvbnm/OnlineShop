@@ -13,9 +13,6 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class MainControllerTest {
 
@@ -29,10 +26,8 @@ public class MainControllerTest {
     @Test
     public void mainPage() {
         List<Category> categoryList = new ArrayList<>();
-        when(categoryRepo.findAll()).thenReturn(categoryList);
         Assertions.assertThat(mainController.mainPage(model))
                 .isEqualTo("index");
-        verify(model).addAttribute("categories", categoryList);
     }
 
     @Test

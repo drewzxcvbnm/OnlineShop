@@ -1,19 +1,19 @@
 package com.online.shop.application.controllers;
 
-import com.online.shop.application.TestBaseUtils;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Category;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
-import com.online.shop.application.services.ProductDeletionService;
-import com.online.shop.application.services.ProductPersistenceService;
-import com.online.shop.application.services.ProductRetrievalService;
+import com.online.shop.application.services.product.ProductDeletionService;
+import com.online.shop.application.services.product.ProductPersistenceService;
+import com.online.shop.application.services.product.ProductRetrievalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import static com.online.shop.application.TestBaseUtils.COMPUTERS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,6 +35,8 @@ public class ItemControllerTest {
     private Model model;
     @Mock
     private CategoryRepo categoryRepo;
+    @Mock
+    private BindingResult bindingResult;
     @InjectMocks
     private ItemController itemController;
 
@@ -57,8 +59,11 @@ public class ItemControllerTest {
     @Test
     public void saveProduct() {
         ProductDto dto = new ProductDto();
-        assertThat(itemController.saveProduct(-1L, dto, model))
-                .isEqualTo("product-page");
+        when(bindingResult.hasErrors()).thenReturn(false).thenReturn(true);
+        assertThat(itemController.updateProduct(-1L, dto, bindingResult, model))
+                .isEqualTo("redirect:/product/-1");
+        assertThat(itemController.updateProduct(-1L, dto, bindingResult, model))
+                .isEqualTo("edit-product");
         verify(productPersistenceService).updateProduct(-1L, dto);
         verify(model).addAttribute(eq("product"), any());
     }
@@ -86,7 +91,7 @@ public class ItemControllerTest {
     @Test
     public void deleteProduct() {
         assertThat(itemController.deleteProduct(-1L, COMPUTERS.getId(), model))
-                .isEqualTo("redirect:/category/"+COMPUTERS.getId());
+                .isEqualTo("redirect:/category/" + COMPUTERS.getId());
         verify(productDeletionService).deleteProduct(-1L);
     }
 

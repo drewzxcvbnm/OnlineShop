@@ -1,6 +1,7 @@
 package com.online.shop.application.services;
 
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.services.product.ProductDeletionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -6,6 +6,7 @@ import com.online.shop.application.entities.Product;
 import com.online.shop.application.exceptions.ItemNotFoundException;
 import com.online.shop.application.mappers.ProductMapper;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.services.product.ProductRetrievalService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

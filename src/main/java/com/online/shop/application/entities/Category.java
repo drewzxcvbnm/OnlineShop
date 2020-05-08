@@ -19,6 +19,7 @@ public class Category {
     @GeneratedValue
     private Long id;
     private String img;
+    @Column(unique = true)
     private String displayName;
     @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")

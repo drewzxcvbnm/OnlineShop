@@ -4,8 +4,13 @@ import com.online.shop.application.TestBaseUtils;
 import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.ProductDto;
 import com.online.shop.application.entities.Product;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,8 +18,14 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProductMapperTest {
 
+    @Mock
+    private ReviewMapper reviewMapper;
+    @Mock
+    private CategoryMapper categoryMapper;
+    @InjectMocks
     private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     @Test
