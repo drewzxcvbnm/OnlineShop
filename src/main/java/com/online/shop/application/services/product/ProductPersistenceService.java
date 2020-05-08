@@ -28,6 +28,7 @@ public class ProductPersistenceService {
 
     public ProductDto createProduct(ProductDto dto) {
         Product newProduct = productMapper.toEntity(dto);
+        newProduct.setCategory(categoryRepo.getById(dto.getCategory().getId()));
         productRepo.save(newProduct);
         return productMapper.toProductDto(newProduct);
     }

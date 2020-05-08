@@ -3,6 +3,7 @@ package com.online.shop.application.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
@@ -14,5 +15,6 @@ public class PartialProductDto {
     @NotEmpty
     private String description;
     @Positive
+    @NotNull
     private BigDecimal price;
 }

@@ -33,6 +33,8 @@ public class ProductPersistenceServiceTest {
     private CategoryRepo categoryRepo;
     @InjectMocks
     private ProductPersistenceService productPersistenceService;
+    @Mock
+    private Category category;
 
     @Test
     public void updateProduct() {
@@ -52,7 +54,9 @@ public class ProductPersistenceServiceTest {
 
     @Test
     public void createProduct() {
+        when(categoryRepo.getById(23L)).thenReturn(category);
         ProductDto dto = new ProductDto();
+        dto.setCategory(new CategoryDto(23L, ""));
         Product product = new Product();
         when(productMapper.toEntity(dto)).thenReturn(product);
         productPersistenceService.createProduct(dto);
