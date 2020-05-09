@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/stylesheets.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Please Register</title>
+    <style>
+        #form-table {
+            width: 100%;
+        }
+
+        #form-table tr {
+            width: 100%;
+        }
+
+        #form-table td {
+            padding-bottom: 15px;
+        }
+
+        #form-table tr td:first-child {
+            width: 30%;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div th:fragment="content" style="display: flex;justify-content: center">
+    <form name="f" th:action="@{/register}" method="post" th:object="${userDto}"
+          style="width: 30%;text-align: center;margin-top: 30px">
+        <legend style="margin-bottom: 30px">Please enter new user credentials:</legend>
+        <div th:if="${#fields.errors('username').contains('Username is not unique')}" class="alert alert-danger">
+            Username is not unique
+        </div>
+        <table id="form-table">
+            <tr>
+                <td><span class="field-label">Username:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Unique username" th:field="*{username}"
+                           type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Password:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Strong password" th:field="*{password}"
+                           type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Name:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Your name" th:field="*{name}" type="text"
+                           class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Surname:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Your surname" th:field="*{surname}" type="text"
+                           class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Email:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Personal email" th:field="*{email}" type="text"
+                           class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Bank Account Number:</span>
+                </td>
+                <td><input th:errorclass="border-danger" placeholder="IBAN" th:field="*{bankAccount}"
+                           type="text" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Phone number:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Phone number" th:field="*{phoneNumber}"
+                           type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="field-label">Address:</span></td>
+                <td><input th:errorclass="border-danger" placeholder="Delivery address" th:field="*{address}"
+                           type="text" class="form-control"></td>
+            </tr>
+        </table>
+        <div class="form-actions" style="margin-top: 20px">
+            <button style="width: 50%" type="submit" class="btn btn-primary btn-lg">Register</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

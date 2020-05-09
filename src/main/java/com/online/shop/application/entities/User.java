@@ -18,11 +18,12 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
     @Enumerated(EnumType.STRING)
     private Authority authority;
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
     private UserInfo userInfo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ProductReview> productReviews = new ArrayList<>();
