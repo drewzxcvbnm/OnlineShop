@@ -18,8 +18,8 @@ public class OrderMapperTest {
         OrderDto orderDto = new OrderDto();
         orderDto.setAddress("ad");
         orderDto.setBankAccount("bc");
-        orderDto.setCustomerName("cn");
-        orderDto.setCustomerSurname("cs");
+        orderDto.setName("cn");
+        orderDto.setSurname("cs");
         assertThat(orderMapper.toOrder(orderDto))
                 .isEqualToComparingFieldByField(expected());
     }
@@ -28,8 +28,8 @@ public class OrderMapperTest {
         return Order.builder()
                 .address("ad")
                 .bankAccount("bc")
-                .customerName("cn")
-                .customerSurname("cs")
+                .name("cn")
+                .surname("cs")
                 .purchases(new ArrayList<>())
                 .build();
     }

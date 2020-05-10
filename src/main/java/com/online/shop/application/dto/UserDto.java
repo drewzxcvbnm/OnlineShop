@@ -8,6 +8,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import static com.online.shop.application.Constants.IBAN_REGEX;
+import static com.online.shop.application.Constants.PHONE_REGEX;
+
 @Data
 public class UserDto {
     @NotEmpty
@@ -28,9 +31,9 @@ public class UserDto {
     @NotEmpty
     private String address;
     @NotEmpty
-    @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$")
+    @Pattern(regexp = PHONE_REGEX)
     private String phoneNumber;
     @NotEmpty
-    @Pattern(regexp = "^([A-Z]{2}[ \\-]?[0-9]{2})(?=(?:[ \\-]?[A-Z0-9]){9,30}$)((?:[ \\-]?[A-Z0-9]{3,5}){2,7})([ \\-]?[A-Z0-9]{1,3})?$")
+    @Pattern(regexp = IBAN_REGEX)
     private String bankAccount;
 }

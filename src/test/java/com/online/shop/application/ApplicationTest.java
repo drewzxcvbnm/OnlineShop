@@ -7,7 +7,6 @@ import com.online.shop.application.entities.ProductReview;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
-import org.hibernate.Hibernate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,10 +75,10 @@ public class ApplicationTest {
         getRequest("/cart/content");
         getRequest("/cart/checkout");
         mockMvc.perform(post("/cart/submit").session(mockHttpSession)
-                .param("customerName", "Andris")
-                .param("customerSurname", "Zacs")
+                .param("name", "Andris")
+                .param("surname", "Zacs")
                 .param("address", "Visku 1")
-                .param("bankAccount", "IBAN12321412"))
+                .param("bankAccount", "NL86ABNA1735658812"))
                 .andExpect(status().isOk());
         List<Order> orders = orderRepo.findAll();
         assertThat(orders).size().isEqualTo(1);
@@ -180,9 +179,9 @@ public class ApplicationTest {
     private Order expectedOrder(List<Product> products) {
         Order order = new Order();
         order.setAddress("Visku 1");
-        order.setBankAccount("IBAN12321412");
-        order.setCustomerName("Andris");
-        order.setCustomerSurname("Zacs");
+        order.setBankAccount("NL86ABNA1735658812");
+        order.setName("Andris");
+        order.setSurname("Zacs");
         return order;
     }
 

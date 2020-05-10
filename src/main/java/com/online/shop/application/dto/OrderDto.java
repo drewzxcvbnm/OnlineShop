@@ -5,15 +5,17 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import static com.online.shop.application.Constants.IBAN_REGEX;
+
 @Data
 public class OrderDto {
     @Pattern(regexp = "^[A-Z][a-z]+")
-    String customerName;
+    String name;
     @Pattern(regexp = "^[A-Z][a-z]+")
-    String customerSurname;
+    String surname;
     @NotEmpty
     String address;
     @NotEmpty
-    @Pattern(regexp = "^([A-Z]{2}[ \\-]?[0-9]{2})(?=(?:[ \\-]?[A-Z0-9]){9,30}$)((?:[ \\-]?[A-Z0-9]{3,5}){2,7})([ \\-]?[A-Z0-9]{1,3})?$")
+    @Pattern(regexp = IBAN_REGEX)
     String bankAccount;
 }
