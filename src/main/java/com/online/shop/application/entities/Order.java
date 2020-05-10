@@ -19,8 +19,8 @@ public class Order {
     @Id
     @GeneratedValue
     private Long id;
-    private String customerName;
-    private String customerSurname;
+    private String name;
+    private String surname;
     private String address;
     private String bankAccount;
     @Builder.Default

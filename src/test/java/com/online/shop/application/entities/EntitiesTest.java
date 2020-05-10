@@ -22,6 +22,9 @@ public class EntitiesTest {
         testEntity(User.builder().build());
         testEntity(Order.builder().build());
         testEntity(Purchase.builder().build());
+        testEntity(ProductReview.builder().build());
+        testEntity(UserInfo.builder().build());
+        testEntity(Category.builder().build());
         Purchase purchase = new Purchase(null, null);
         assertNull(purchase.getProduct());
     }

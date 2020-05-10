@@ -24,7 +24,7 @@ public class ApplicationUserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "{bcrypt}" + user.getPassword();
+        return user.getPassword();
     }
 
     @Override

@@ -6,11 +6,10 @@ import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Runner implements CommandLineRunner {
 
     private final ProductRepo productRepo;
     private final UserRepo userRepo;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
     private final CategoryRepo categoryRepo;
 
     @Override
@@ -93,7 +92,6 @@ public class Runner implements CommandLineRunner {
         ProductReview review = new ProductReview();
         review.setUser(user);
         review.setProduct(product);
-        review.setDateOfCreation(LocalDate.now());
         review.setRating(rating);
         review.setContent(content);
         return review;

@@ -1,6 +1,7 @@
 package com.online.shop.application.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,10 +21,12 @@ public class ProductReview {
     @Lob
     private String content;
     private Integer rating;
+    @CreationTimestamp
     private LocalDate dateOfCreation;
-    @ManyToOne
-    private Product product;
-    @ManyToOne
     @JoinColumn
+    @ManyToOne(optional = false)
+    private Product product;
+    @JoinColumn
+    @ManyToOne(optional = false)
     private User user;
 }

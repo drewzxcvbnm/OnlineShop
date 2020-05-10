@@ -22,7 +22,7 @@ public class ApplicationUserPrincipalTest {
         assertTrue(principal.isCredentialsNonExpired());
         assertTrue(principal.isEnabled());
         assertEquals("name", principal.getUsername());
-        assertEquals("{bcrypt}pass", principal.getPassword());
+        assertEquals("pass", principal.getPassword());
         assertEquals("ROLE_ADMIN", principal.getAuthorities().toArray()[0].toString());
 
     }

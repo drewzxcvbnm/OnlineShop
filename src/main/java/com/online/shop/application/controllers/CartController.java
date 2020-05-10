@@ -1,7 +1,9 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
+import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.services.CartService;
+import com.online.shop.application.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import javax.validation.Valid;
 public class CartController {
 
     private final CartService cartService;
+    private final UserService userService;
+    private final OrderMapper orderMapper;
 
     @GetMapping("/content")
     public String getCartContents(Model model) {
@@ -45,6 +49,8 @@ public class CartController {
 
     @GetMapping("/checkout")
     public String checkout(OrderDto order) {
+        userService.getCurrentUserInfo()
+                .ifPresent(info -> orderMapper.updateOrderDto(order, info));
         return "form-order";
     }
 

@@ -1,7 +1,10 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.OrderDto;
+import com.online.shop.application.entities.UserInfo;
+import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.services.CartService;
+import com.online.shop.application.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +30,10 @@ public class CartControllerTest {
     private Model model;
     @Mock
     private BindingResult bindingResult;
+    @Mock
+    private UserService userService;
+    @Mock
+    private OrderMapper orderMapper;
     @InjectMocks
     private CartController cartController;
 
@@ -56,7 +65,19 @@ public class CartControllerTest {
 
     @Test
     public void checkout() {
-        assertThat(cartController.checkout(new OrderDto())).isEqualTo("form-order");
+        UserInfo userInfo = getUserInfo();
+        when(userService.getCurrentUserInfo())
+                .thenReturn(Optional.empty())
+                .thenReturn(Optional.of(userInfo));
+        OrderDto order = new OrderDto();
+        assertThat(cartController.checkout(order)).isEqualTo("form-order");
+        assertThat(cartController.checkout(order)).isEqualTo("form-order");
+        verify(orderMapper).updateOrderDto(order, userInfo);
+    }
+
+    private UserInfo getUserInfo() {
+        return UserInfo.builder()
+                .name("n").surname("sn").bankAccount("ba").address("a").build();
     }
 
     @Test

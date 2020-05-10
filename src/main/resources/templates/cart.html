@@ -8,22 +8,24 @@
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<h1>Cart:</h1>
-<table class="table">
-    <tr th:each="product : ${products}">
-        <td id="product-name" style="width: 15%"><a th:text="${product.getName()}"></a></td>
-        <td th:text="${product.getDescription()}"></td>
-        <td style="width: 10%" th:text="${product.getPrice()}+'$'"></td>
-    </tr>
-    <tr>
-        <td style="font-size: x-large;text-align: right" colspan="3">
-            <b th:text="'Sum: ' + (${products.isEmpty() == false} ? ${#aggregates.sum(products.![price])} : '0')"></b>
-        </td>
-    </tr>
-</table>
-<a href="/cart/checkout" type="button" class="btn btn-outline-primary" style="font-size: x-large;margin-left: 15px">Checkout</a>
-<a href="/cart/clear" type="button" class="btn btn-outline-warning" style="font-size: x-large;margin-left: 15px">Clear
-    Cart</a>
-
+<div style="margin: 20px 20px">
+    <h1>Cart:</h1>
+    <table class="table">
+        <tr th:each="product : ${products}">
+            <td id="product-name" style="width: 15%"><a th:text="${product.getName()}"></a></td>
+            <td th:text="${product.getDescription()}"></td>
+            <td style="width: 10%" th:text="${product.getPrice()}+'$'"></td>
+        </tr>
+        <tr>
+            <td style="font-size: x-large;text-align: right;" colspan="3">
+                <b style="margin-right: 50px"
+                   th:text="'Sum: ' + (${products.isEmpty() == false} ? ${#aggregates.sum(products.![price])+'$'} : '0$')"></b>
+            </td>
+        </tr>
+    </table>
+    <a href="/cart/checkout" type="button" class="btn btn-outline-primary" style="font-size: x-large;margin-left: 15px">Checkout</a>
+    <a href="/cart/clear" type="button" class="btn btn-outline-warning"
+       style="font-size: x-large;margin-left: 15px">Clear Cart</a>
+</div>
 </body>
 </html>
