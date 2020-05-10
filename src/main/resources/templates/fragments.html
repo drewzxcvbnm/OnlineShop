@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="/css/stylesheets.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+    </style>
 </head>
 <body>
 <div class="navbar" th:fragment="header" style="background-color: darkslategray">
@@ -15,10 +17,11 @@
         <a href="/register" class="list-item btn">Register</a>
     </ul>
     <ul class="nav navbar-nav navbar-right list-menu">
-        <span sec:authorize="isAuthenticated()" th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
+        <span style="margin-right: 30px" sec:authorize="isAuthenticated()" th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
               class="list-item"></span>
-        <a class="list-item" href="/cart/content" style="color: white;font-size: x-large;">Cart
+        <a id="cartLink" class="list-item" href="/cart/content">
             <span class="badge badge-light badge-pill" style="margin-left: 10px" id="cart-size">0</span>
+            <img th:src="@{~/images/cart.png}" style="width: 25px;height: 25px;">
         </a>
     </ul>
     <script>

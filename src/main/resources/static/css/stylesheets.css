@@ -93,3 +93,14 @@
     margin-left: 100px;
     margin-top: 50px
 }
+
+#cartLink {
+    font-size: x-large;
+    text-decoration: none;
+    transition: opacity 200ms;
+}
+
+#cartLink:hover {
+    opacity: 0.3;
+}
+
