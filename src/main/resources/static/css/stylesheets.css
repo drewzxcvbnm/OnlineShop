@@ -11,6 +11,11 @@
     font-stretch: ultra-expanded;
 }
 
+#category-name a {
+    color: black;
+    text-decoration: none;
+}
+
 #product-name {
     font-size: large;
     font-style: italic;
@@ -61,6 +66,12 @@
     color: white;
     font-size: x-large;
     margin-left: 10px;
+    transition: opacity 200ms;
+}
+
+.list-item:hover {
+    color: white;
+    opacity: 0.6;
 }
 
 .ico {
@@ -94,6 +105,15 @@
     margin-top: 50px
 }
 
+#profileLink {
+    transition: opacity 200ms;
+}
+
+#profileLink:hover {
+    opacity: 0.6;
+}
+
+
 #cartLink {
     font-size: x-large;
     text-decoration: none;
@@ -101,6 +121,6 @@
 }
 
 #cartLink:hover {
-    opacity: 0.3;
+    opacity: 0.6;
 }
 

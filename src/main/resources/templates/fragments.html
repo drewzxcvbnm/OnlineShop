@@ -17,8 +17,12 @@
         <a href="/register" class="list-item btn">Register</a>
     </ul>
     <ul class="nav navbar-nav navbar-right list-menu">
-        <span style="margin-right: 30px" sec:authorize="isAuthenticated()" th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
-              class="list-item"></span>
+        <a sec:authorize="isAuthenticated()" style="display: inline" id="profileLink">
+            <span th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
+                  class="list-item"></span>
+            <img th:src="@{~/images/profile.png}"
+                 style="width: 25px;height: 25px;margin-right: 40px;margin-left: 10px;border-radius: 20px;margin-bottom: 5px">
+        </a>
         <a id="cartLink" class="list-item" href="/cart/content">
             <span class="badge badge-light badge-pill" style="margin-left: 10px" id="cart-size">0</span>
             <img th:src="@{~/images/cart.png}" style="width: 25px;height: 25px;">
