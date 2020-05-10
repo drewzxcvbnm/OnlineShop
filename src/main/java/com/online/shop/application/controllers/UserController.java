@@ -1,8 +1,6 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.UserDto;
-import com.online.shop.application.mappers.UserMapper;
-import com.online.shop.application.repositories.UserRepo;
 import com.online.shop.application.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,8 +15,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserMapper userMapper;
-    private final UserRepo userRepo;
     private final UserService userService;
 
     @GetMapping("/register")
