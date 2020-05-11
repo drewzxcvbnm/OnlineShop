@@ -4,6 +4,7 @@ import com.online.shop.application.dto.ReviewDto;
 import com.online.shop.application.services.ReviewService;
 import com.online.shop.application.services.product.ProductRetrievalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ public class ReviewsController {
     private final ReviewService reviewService;
 
     @PostMapping("/{productId}")
+    @PreAuthorize("@userProductValidationService.userHasProduct(#productId)")
     public String saveReview(@Valid ReviewDto reviewDto, BindingResult result,
                              @PathVariable Long productId, Model model) {
         if (!result.hasErrors()) {

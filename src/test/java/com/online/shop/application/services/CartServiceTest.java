@@ -1,13 +1,14 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.OrderDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.mappers.ProductMapper;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.services.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,6 +34,8 @@ public class CartServiceTest {
     private OrderMapper orderMapper;
     @Mock
     private OrderRepo orderRepo;
+    @Mock
+    private UserService userService;
     @InjectMocks
     private CartService cartService;
 
@@ -55,6 +58,7 @@ public class CartServiceTest {
 
     @Test
     public void submitOrder() {
+        when(userService.getCurrentUser()).thenReturn(Optional.empty());
         when(productRepo.findById(anyLong())).thenReturn(Optional.of(Product.builder().id(1L).build()));
         cartService.addProductToCart(-1L);
 

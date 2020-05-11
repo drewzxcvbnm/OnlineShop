@@ -1,7 +1,7 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.UserDto;
-import com.online.shop.application.services.UserService;
+import com.online.shop.application.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

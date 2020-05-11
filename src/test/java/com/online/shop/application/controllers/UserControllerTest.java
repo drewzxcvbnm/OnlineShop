@@ -2,7 +2,7 @@ package com.online.shop.application.controllers;
 
 
 import com.online.shop.application.dto.UserDto;
-import com.online.shop.application.services.UserService;
+import com.online.shop.application.services.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

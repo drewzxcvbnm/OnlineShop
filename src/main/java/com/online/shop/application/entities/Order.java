@@ -23,6 +23,9 @@ public class Order {
     private String surname;
     private String address;
     private String bankAccount;
+    @JoinColumn
+    @ManyToOne(optional = true)
+    private User user;
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<Purchase> purchases = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.online.shop.application.services;
+package com.online.shop.application.services.user;
 
 import com.online.shop.application.dto.UserDto;
 import com.online.shop.application.entities.Authority;
@@ -29,8 +29,13 @@ public class UserService {
     }
 
     public Optional<UserInfo> getCurrentUserInfo() {
-        return userRepo.findByUsername(getCurrentUsername())
+        return getCurrentUser()
                 .map(User::getUserInfo);
+    }
+
+    public Optional<User> getCurrentUser() {
+        String username = getCurrentUsername();
+        return userRepo.findByUsername(username);
     }
 
     @Transactional

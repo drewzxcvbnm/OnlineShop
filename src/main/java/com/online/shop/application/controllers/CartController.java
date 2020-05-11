@@ -3,7 +3,7 @@ package com.online.shop.application.controllers;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.services.CartService;
-import com.online.shop.application.services.UserService;
+import com.online.shop.application.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -65,6 +65,7 @@
         </li>
     </ul>
     <form sec:authorize="isAuthenticated()" th:object="${reviewDto}"
+          th:if="${@userProductValidationService.userHasProduct(product.getId())}"
           th:action="@{/product/review/{productId}(productId=${product.getId()})}" method="post"
           style="font-size: larger;margin-top: 40px">
         <div th:text="'Author: '+${#authentication.getPrincipal().getUsername()}" th:field="*{author}"></div>

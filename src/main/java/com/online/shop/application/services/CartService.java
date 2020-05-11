@@ -1,7 +1,7 @@
 package com.online.shop.application.services;
 
-import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.dto.OrderDto;
+import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.entities.Order;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.entities.Purchase;
@@ -10,6 +10,7 @@ import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.mappers.ProductMapper;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -31,6 +32,7 @@ public class CartService {
     private final ProductMapper productMapper;
     private final OrderMapper orderMapper;
     private final OrderRepo orderRepo;
+    private final UserService userService;
     private List<Product> cart = new ArrayList<>();
 
     public void addProductToCart(Long productId) {
@@ -49,6 +51,7 @@ public class CartService {
     public void submitOrder(OrderDto orderDto) {
         Order order = orderMapper.toOrder(orderDto);
         order.setPurchases(getPurchasedProducts(order));
+        order.setUser(userService.getCurrentUser().orElse(null));
         orderRepo.save(order);
         cart.clear();
     }

@@ -7,6 +7,7 @@ import com.online.shop.application.entities.ProductReview;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class ApplicationTest {
     @Test
     @Transactional
     public void testBuying() throws Exception {
+        orderRepo.deleteAll();
         getRequest("/");
         getRequest("/category/" + COMPUTERS.getId());
         List<Product> products = categoryRepo.getById(COMPUTERS.getId()).getProducts();
@@ -137,6 +139,10 @@ public class ApplicationTest {
                 .param("password", "strongPassword"))
                 .andExpect(status().is3xxRedirection());
         long appleBookId = getIdOfProduct("Apple MacBook Air 13");
+        transactionTemplate.execute(s -> {
+            buy(appleBookId);
+            return null;
+        });
         mockMvc.perform(post("/product/review/" + appleBookId).session(mockHttpSession)
                 .param("rating", "0")
                 .param("content", "good stuff")
@@ -154,6 +160,18 @@ public class ApplicationTest {
         });
         assertThat(review[0].getRating()).isEqualTo(10);
         assertThat(review[0].getContent()).isEqualTo("good stuff");
+    }
+
+    @SneakyThrows
+    private void buy(long productId) {
+        mockMvc.perform(post("/cart/add/" + productId).session(mockHttpSession))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/cart/submit").session(mockHttpSession)
+                .param("name", "Andris")
+                .param("surname", "Zacs")
+                .param("address", "Visku 1")
+                .param("bankAccount", "NL86ABNA1735658812"))
+                .andExpect(status().isOk());
     }
 
     private long getIdOfProduct(String productName) {

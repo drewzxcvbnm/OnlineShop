@@ -6,6 +6,7 @@ import com.online.shop.application.mappers.ReviewMapper;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.ReviewRepo;
 import com.online.shop.application.repositories.UserRepo;
+import com.online.shop.application.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

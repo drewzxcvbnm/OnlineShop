@@ -27,4 +27,6 @@ public class User {
     private UserInfo userInfo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ProductReview> productReviews = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Order> orders;
 }

@@ -4,7 +4,7 @@ import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.entities.UserInfo;
 import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.services.CartService;
-import com.online.shop.application.services.UserService;
+import com.online.shop.application.services.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
