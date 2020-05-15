@@ -22,4 +22,9 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
 }

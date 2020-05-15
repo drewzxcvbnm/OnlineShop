@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/stylesheets.css">
+    <title>Cart</title>
+    <style>
+        .mycards div img {
+            width: 100%;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div style="margin: 100px 400px;text-indent: 50px">
+    <h4>
+        <p>
+            Welcome to Online Shop Inc., your number one source for all your favorite products. We're dedicated to
+            giving
+            you the very best of everything, with a focus on quality, efficiency and a high standard of delivery.
+        </p>
+        <p>
+            Founded in 2020 by Andris Zacs, Online Shop Inc. has come a long way from its humble beginnings in Riga,
+            Latvia. When Zacs first started out, his passion for online web shopping drove him to quit his day job and
+            do tons of research, so that Online Shop Inc. could one day offer you the world's most convenient and
+            advanced shopping experience. We now serve customers all over the world, and are thrilled that we're able to
+            turn our passion into our own shopping website.
+        </p>
+        <p>
+            We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or
+            comments, please don't hesitate to contact us.
+        </p>
+        <br>
+        <br>
+            <div style="text-align: center;margin-right: 100px;font-weight: bold">Used technologies:</div>
+        <br>
+    </h4>
+    <div class="card-group mycards">
+        <div class="card" style="width: 18rem;">
+            <img style="height: 200px" class="card-img-top"
+                 src="https://cdn.app.compendium.com/uploads/user/e7c690e8-6ff9-102a-ac6d-e4aebca50425/ed5569e8-c0dd-458c-8450-cde6300093bd/File/a5023b0f0fb67f59176a0499af9021ed/java_horz_clr.png"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Java</h5>
+                <p class="card-text">The most popular enterprise application development platform that offers an
+                    extensive standard application programming interface coupled with a litany of available enterprise
+                    level frameworks.</p>
+                <a href="https://java.com/en/download/faq/whatis_java.xml" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top"
+                 src="https://4.bp.blogspot.com/-9kYSwCDRbms/W-qSUvwnFWI/AAAAAAAAEsE/j4EeFEPQHBc-QpxMV9l3gQAaLAuG2WhTgCLcBGAs/s1600/spring-framework.png"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Spring Framework</h5>
+                <p class="card-text">
+                    Provides a comprehensive and highly modular programming and configuration model for modern
+                    Java-based enterprise web applications - on any kind of deployment platform.
+                </p>
+                <a href="https://spring.io/projects/spring-framework" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://www.h2database.com/html/images/h2-logo-2.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">H2 database</h5>
+                <p class="card-text">An open-source lightweight relational database management system written in Java
+                    that can can be configured to run as in-memory database or run in the client-server mode.</p>
+                <a href="https://www.h2database.com/html/main.html" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="card" style="width: 18rem;">
+            <img style="" class="card-img-top"
+                 src="https://raw.githubusercontent.com/thymeleaf/thymeleaf-dist/master/src/artwork/thymeleaf%202016/thymeleaf_logo_white.png"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Thymeleaf</h5>
+                <p class="card-text">A modern server-side Java template engine for both web and standalone environments.
+                    Brings elegant natural templates to the development workflow. With modules for Spring Framework, a
+                    host of integrations with other tools, and the ability to plug in your own functionality,
+                    Thymeleaf is ideal for modern-day HTML5 JVM web development — although there is much more it can
+                    do.</p>
+                <a href="https://www.thymeleaf.org/" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" style="height: 200px"
+                 src="https://scopetech.com.sa/img/technologies/bootstrap.png"
+                 alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">BootStrap</h5>
+                <p class="card-text">
+                    A free and open-source CSS framework directed at responsive, mobile-first front-end web development.
+                    It contains CSS- and JavaScript-based design templates for typography, forms, buttons, navigation,
+                    and other interface components.
+                </p>
+                <a href="https://getbootstrap.com/" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
