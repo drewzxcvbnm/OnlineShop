@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +13,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ProductDto extends PartialProductDto {
     private CategoryDto category;
-    private List<@NotBlank String> properties = new ArrayList<>();
+    private List<@Size(min = 1, max = 255) String> properties = new ArrayList<>();
     private List<ReviewDto> reviews = new ArrayList<>();
 }
