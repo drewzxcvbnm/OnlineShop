@@ -7,6 +7,7 @@ import com.online.shop.application.entities.ProductReview;
 import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.OrderRepo;
 import com.online.shop.application.repositories.ProductRepo;
+import com.online.shop.application.repositories.ReviewRepo;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +53,8 @@ public class ApplicationTest {
     private CategoryRepo categoryRepo;
     @Autowired
     private OrderRepo orderRepo;
+    @Autowired
+    private ReviewRepo reviewRepo;
     @Autowired
     private CartController cartController;
     private MockHttpSession mockHttpSession = new MockHttpSession();
@@ -134,6 +137,7 @@ public class ApplicationTest {
 
     @Test
     public void testProductReview() throws Exception {
+        reviewRepo.deleteAll();
         mockMvc.perform(post("/login").session(mockHttpSession)
                 .param("username", "typicalUser")
                 .param("password", "strongPassword"))
@@ -160,6 +164,8 @@ public class ApplicationTest {
         });
         assertThat(review[0].getRating()).isEqualTo(10);
         assertThat(review[0].getContent()).isEqualTo("good stuff");
+        getRequest(String.format("/product/review/delete/%s/%s", appleBookId, review[0].getId()));
+        assertThat(reviewRepo.findAll().size()).isEqualTo(0);
     }
 
     @SneakyThrows

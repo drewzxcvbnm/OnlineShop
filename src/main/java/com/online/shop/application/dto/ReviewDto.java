@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Data
 public class ReviewDto {
+    private Long id;
     private String author;
     private LocalDate dateOfCreation;
     @NotEmpty

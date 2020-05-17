@@ -58,10 +58,21 @@
 
     <h3>Product reviews:</h3>
     <ul th:each="review : ${product.getReviews()}">
-        <li style="border: darkgrey">
+        <li>
             <div th:text="'Author: '+${review.author}"></div>
             <div th:text="'Rating: '+${review.rating}+'/10'"></div>
-            <div th:text="${review.content}"></div>
+            <div class="border rounded" style="white-space: pre-line" th:utext="${review.content}"></div>
+            <div th:if="${@reviewService.userCanDeleteReview(review.getId())}"
+                 th:onclick="'clickLink(\'delete-review-'+${review.getId()}+'\')'"
+                 style="margin-top: 5px;width: 160px;height: 30px;display: flex;align-items: center"
+                 class="btn btn-danger">
+                <a th:id="'delete-review-'+${review.getId()}" th:href="@{/product/review/delete/{productId}/{reviewId}
+                (reviewId=${review.getId()},productId=${product.getId()})}">
+                    <img class="ico" style="margin-right: 10px;"
+                         src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png"/>
+                </a>
+                <span style="color: black">Delete Review</span>
+            </div>
         </li>
     </ul>
     <form sec:authorize="isAuthenticated()" th:object="${reviewDto}"

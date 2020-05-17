@@ -38,6 +38,12 @@ public class UserService {
         return userRepo.findByUsername(username);
     }
 
+    public boolean isAdmin() {
+        return getCurrentUser()
+                .map(user -> Authority.ADMIN.equals(user.getAuthority()))
+                .orElse(false);
+    }
+
     @Transactional
     public void saveNewUser(UserDto userDto) {
         User user = userMapper.toUser(userDto);
