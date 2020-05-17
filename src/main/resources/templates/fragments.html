@@ -13,7 +13,7 @@
     <ul class="nav navbar-nav list-menu">
         <a href="/" class="list-item btn">Home</a>
         <a href="/login" class="list-item btn">Login</a>
-        <a href="/logout" class="list-item btn">Logout</a>
+        <a sec:authorize="isAuthenticated()" href="/logout" class="list-item btn">Logout</a>
         <a href="/register" class="list-item btn">Register</a>
         <a href="/about" class="list-item btn">About</a>
     </ul>
