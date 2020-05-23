@@ -28,14 +28,14 @@ public class UserService {
                 .getName();
     }
 
-    public Optional<UserInfo> getCurrentUserInfo() {
-        return getCurrentUser()
-                .map(User::getUserInfo);
-    }
-
     public Optional<User> getCurrentUser() {
         String username = getCurrentUsername();
         return userRepo.findByUsername(username);
+    }
+
+    public Optional<UserInfo> getCurrentUserInfo() {
+        return getCurrentUser()
+                .map(User::getUserInfo);
     }
 
     public boolean isAdmin() {
