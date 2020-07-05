@@ -94,3 +94,9 @@ pmd {
     consoleOutput = true
     incrementalAnalysis = true
 }
+
+task runJar(type: JavaExec) {
+    main = "-jar";
+    args jar.getArchiveFile().get()
+}
+
