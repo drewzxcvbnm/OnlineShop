@@ -10,8 +10,6 @@ Online Shopping application featuring:
 * Thymeleaf
 * Spring data JPA
 * H2 embedded database
-## Author
-Authored by Andris Zacs for the purpose of fulfilling TSI OOP course work
 
 ## Requirements
 * **Application needs to utilize the OOP paradigm** - an inherently OOP language (Java 14) was used of development
