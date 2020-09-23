@@ -1,7 +1,10 @@
-From gradle:jre14
+FROM gradle:jre14 AS FIRST
 COPY . /app
 WORKDIR /app
+RUN gradle clean assemble
+
+FROM openjdk:14 AS SECOND
 EXPOSE 8080
-RUN gradle assemble
-ENTRYPOINT gradle runJar
+COPY --from=0 /app/build/libs/*.jar /app/
+CMD java -jar /app/*.jar
 
