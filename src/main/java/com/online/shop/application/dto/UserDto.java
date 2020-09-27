@@ -2,6 +2,7 @@ package com.online.shop.application.dto;
 
 import com.online.shop.application.services.validation.UniqueUsername;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -35,4 +36,5 @@ public class UserDto {
     @Size(min = 1, max = 255)
     @Pattern(regexp = IBAN_REGEX)
     private String bankAccount;
+    private MultipartFile profilePicture;
 }

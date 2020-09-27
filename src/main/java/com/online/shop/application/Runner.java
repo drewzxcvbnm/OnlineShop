@@ -5,6 +5,7 @@ import com.online.shop.application.repositories.CategoryRepo;
 import com.online.shop.application.repositories.ProductRepo;
 import com.online.shop.application.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -40,7 +41,7 @@ public class Runner implements CommandLineRunner {
         categoryRepo.saveAll(categoryList);
         User normalUser = User.builder().authority(Authority.USER).username("typicalUser").password(hash("strongPassword")).build();
         userRepo.save(normalUser);
-        User user = User.builder().authority(Authority.ADMIN).username("chadAdmin").password(hash("abc123")).build();
+        User user = User.builder().authority(Authority.ADMIN).username("chadAdmin").password(hash("abc123")).profilePicture(getAdminPic()).build();
         userRepo.save(user);
         Product samsungGalaxyS10 = Product.builder().category(portableElectronics)
                 .name("Samsung Galaxy S10")
@@ -86,6 +87,16 @@ public class Runner implements CommandLineRunner {
             genericProduct.setCategory(value);
             productRepo.save(genericProduct);
         }
+    }
+
+    @SneakyThrows
+    private byte[] getAdminPic() {
+        byte[] bytes = getClass().getClassLoader().getResourceAsStream("static/images/admin_profile.png").readAllBytes();
+        Byte[] byteObjects = new Byte[bytes.length];
+        int i = 0;
+        for (byte b : bytes)
+            byteObjects[i++] = b;  // Autoboxing.
+        return bytes;
     }
 
     private ProductReview phoneReview(int rating, User user, Product product, String content) {
