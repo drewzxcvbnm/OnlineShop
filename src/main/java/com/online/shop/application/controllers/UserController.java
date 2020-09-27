@@ -17,6 +17,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "profile";
+    }
+
     @GetMapping("/register")
     public String registrationPage(UserDto userDto) {
         return "registration-page";

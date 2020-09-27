@@ -18,7 +18,7 @@
         <a href="/about" class="list-item btn">About</a>
     </ul>
     <ul class="nav navbar-nav navbar-right list-menu">
-        <a sec:authorize="isAuthenticated()" style="display: inline" id="profileLink">
+        <a sec:authorize="isAuthenticated()" style="display: inline" href="/profile" id="profileLink">
             <span th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
                   class="list-item"></span>
             <img th:src="@{~/images/profile.svg}"
