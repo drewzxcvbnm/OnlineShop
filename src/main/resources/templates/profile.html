@@ -4,14 +4,142 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/stylesheets.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <title>Profile</title>
+    <style>
+        #profilePic {
+            max-width: 256px;
+            max-height: 256px;
+        }
+
+        #user-info-form {
+            width: 50%;
+            text-align: center;
+            min-width: 400px;
+        }
+
+        #form-table {
+            width: 70%;
+            min-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #form-table tr td {
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        #form-table tr td:first-of-type {
+            width: 200px;
+        }
+
+    </style>
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
 <div th:if="${showMessage}">
     <div class="alert alert-success" th:text="${message}"></div>
 </div>
-<h1 th:text="${#authentication.getPrincipal().getUsername()}"></h1>
+<div style="margin: 20px 20px">
+    <div style="display: flex;flex-direction: row;align-items: center;justify-content: space-evenly;flex-wrap: wrap">
+        <div style="display: flex;flex-direction: column;align-items: center;">
+            <img id="profilePic" th:src="@{|~/user/${@userService.getObligatoryCurrentUser().getId()}/image|}">
+            <br>
+            <h1 th:text="${#authentication.getPrincipal().getUsername()}"></h1>
+        </div>
+        <div id="user-info-form">
+            <form name="f" th:action="@{/user/update}" method="post" th:object="${userDto}"
+                  enctype="multipart/form-data"
+                  style="text-align: center;margin-top: 30px;">
+                <legend style="margin-bottom: 30px">User credentials:</legend>
+                <table id="form-table">
+                    <tr>
+                        <td><span class="field-label">Name:</span></td>
+                        <td><input th:errorclass="border-danger" placeholder="Your name" th:field="*{name}" type="text"
+                                   class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-label">Surname:</span></td>
+                        <td><input th:errorclass="border-danger" placeholder="Your surname" th:field="*{surname}"
+                                   type="text"
+                                   class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-label">Email:</span></td>
+                        <td><input th:errorclass="border-danger" placeholder="Personal email" th:field="*{email}"
+                                   type="text"
+                                   class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-label">Bank Account Number:</span>
+                        </td>
+                        <td><input th:errorclass="border-danger" placeholder="IBAN" th:field="*{bankAccount}"
+                                   type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-label">Phone number:</span></td>
+                        <td><input th:errorclass="border-danger" placeholder="Phone number" th:field="*{phoneNumber}"
+                                   type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-label">Address:</span></td>
+                        <td><input th:errorclass="border-danger" placeholder="Delivery address" th:field="*{address}"
+                                   type="text" class="form-control"></td>
+                    </tr>
+                </table>
+                <div class="form-actions" style="margin-top: 20px">
+                    <button style="width: 50%" type="submit" class="btn btn-primary btn-lg">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="border" style="display: flex;flex-direction: column;margin: 20px 20px">
+        <div class="card-header">
+            <h2 style="margin: 20px 20px">User Orders:</h2>
+        </div>
+        <div id="collapsible">
+            <th:block th:if="${!orders.isEmpty()}" th:each="order,iter : ${orders}">
+                <div class="card-header" th:id="'heading'+${iter.index}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                th:data-target="'#collapse'+${iter.index}"
+                                aria-expanded="false" th:aria-controls="'collapse'+${iter.index}">
+                            <div th:text="'Order #'+${order.getId()}"></div>
+                        </button>
+                        <div style="float: right"
+                             th:text="'Sum: ' + ${#aggregates.sum(order.getPurchasedProducts().![price])+'$'}"></div>
+                    </h5>
+                </div>
 
+                <div th:id="'collapse'+${iter.index}" class="collapse" th:aria-labelledby="'heading'+${iter.index}"
+                     data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table">
+                            <tr th:each="product : ${order.getPurchasedProducts()}">
+                                <td id="product-name" style="width: 15%"><a th:text="${product.getName()}"></a></td>
+                                <td th:text="${product.getDescription()}"></td>
+                                <td style="width: 10%" th:text="${product.getPrice()}+'$'"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </th:block>
+            <div style="text-align: center;font-size: large" th:unless="${!orders.isEmpty()}"
+                 class="card-header text-secondary">No Pending Orders
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

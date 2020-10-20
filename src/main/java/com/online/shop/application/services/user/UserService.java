@@ -23,6 +23,17 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
+    public UserDto getCurrentUserDto() {
+        return userMapper.toDto(getObligatoryCurrentUser());
+    }
+
+    @Transactional
+    public void updateUser(UserDto userDto) {
+        User user = getObligatoryCurrentUser();
+        userMapper.updateUser(user, userDto);
+        userRepo.save(user);
+    }
+
     public String getCurrentUsername() {
         return SecurityContextHolder.getContext()
                 .getAuthentication()

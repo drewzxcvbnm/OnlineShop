@@ -1,4 +1,4 @@
-package com.online.shop.application.services;
+package com.online.shop.application.services.user;
 
 import com.online.shop.application.entities.User;
 import com.online.shop.application.repositories.UserRepo;
@@ -16,7 +16,7 @@ public class UserImageService {
     public UserImageService(UserRepo userRepo) {
         this.userRepo = userRepo;
         this.defaultImage = getClass().getClassLoader()
-                .getResourceAsStream("static/images/profile.png")
+                .getResourceAsStream("static/images/profile_2.png")
                 .readAllBytes();
     }
 

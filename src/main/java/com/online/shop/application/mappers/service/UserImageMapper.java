@@ -14,6 +14,7 @@ public class UserImageMapper {
     @Named("userImage")
     public byte[] getProfilePicture(UserDto userDto) {
         return Optional.ofNullable(userDto.getProfilePicture())
+                .filter(file -> !file.isEmpty())
                 .map(this::toByteArray)
                 .orElse(null);
     }

@@ -1,7 +1,8 @@
 package com.online.shop.application.controllers;
 
 import com.online.shop.application.dto.UserDto;
-import com.online.shop.application.services.UserImageService;
+import com.online.shop.application.services.OrderService;
+import com.online.shop.application.services.user.UserImageService;
 import com.online.shop.application.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -24,10 +25,19 @@ public class UserController {
 
     private final UserService userService;
     private final UserImageService userImageService;
+    private final OrderService orderService;
 
     @GetMapping("/profile")
-    public String profilePage() {
+    public String profilePage(Model m) {
+        m.addAttribute("userDto", userService.getCurrentUserDto());
+        m.addAttribute("orders", orderService.getUsersOrders(userService.getObligatoryCurrentUser()));
         return "profile";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(Model m, UserDto userDto) {
+        userService.updateUser(userDto);
+        return profilePage(m);
     }
 
     @GetMapping("/{userId}/image")
