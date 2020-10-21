@@ -1,5 +1,6 @@
 package com.online.shop.application.dto;
 
+import com.online.shop.application.entities.OrderStatus;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -21,5 +22,6 @@ public class OrderDto {
     @NotEmpty
     @Pattern(regexp = IBAN_REGEX)
     String bankAccount;
+    OrderStatus status;
     List<ProductDto> purchasedProducts = new ArrayList<>();
 }

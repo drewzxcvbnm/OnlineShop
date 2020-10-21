@@ -24,6 +24,7 @@ public class Order {
     private String surname;
     private String address;
     private String bankAccount;
+    private OrderStatus status;
     @JoinColumn
     @ManyToOne(optional = true)
     private User user;

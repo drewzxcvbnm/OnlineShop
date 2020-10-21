@@ -11,7 +11,7 @@
 <div th:if="${showMessage}">
     <div class="alert alert-success" th:text="${message}"></div>
 </div>
-<h1>Product Catalog:</h1>
+<h1 style="margin: 20px 20px">Product Catalog:</h1>
 <table class="table">
     <tr class="clickable" th:onclick="'javascript:document.getElementById('+${category.id}+').click()'"
         th:each="category : ${@categoriesManager.getAllCategories()}">

@@ -42,6 +42,15 @@
             width: 200px;
         }
 
+        .clickable-card {
+            transition: 0.4s;
+        }
+
+        .clickable-card:hover {
+            cursor: pointer;
+            background: lightgray;
+        }
+
     </style>
 </head>
 <body>
@@ -110,13 +119,18 @@
         </div>
         <div id="collapsible">
             <th:block th:if="${!orders.isEmpty()}" th:each="order,iter : ${orders}">
-                <div class="card-header" th:id="'heading'+${iter.index}">
+                <div th:onclick="@{|document.getElementById('toggle-btn-${iter.index}').click()|}"
+                     class="card-header clickable-card" style="cursor: pointer"
+                     th:id="'heading'+${iter.index}">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                        <button th:id="'toggle-btn-'+${iter.index}" class="btn btn-link collapsed"
+                                data-toggle="collapse"
                                 th:data-target="'#collapse'+${iter.index}"
                                 aria-expanded="false" th:aria-controls="'collapse'+${iter.index}">
                             <div th:text="'Order #'+${order.getId()}"></div>
                         </button>
+                        <div class="blockquote-footer font-italic" th:text="' '+${order.getStatus().getStatus()}"
+                             style="display: inline"></div>
                         <div style="float: right"
                              th:text="'Sum: ' + ${#aggregates.sum(order.getPurchasedProducts().![price])+'$'}"></div>
                     </h5>
