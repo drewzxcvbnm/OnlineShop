@@ -20,13 +20,13 @@ public class Category {
     private Long id;
     private String img;
     @Column(unique = true)
-    private String displayName;
+    private String name;
     @Builder.Default
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
-    public Category(String img, String displayName) {
+    public Category(String img, String name) {
         this.img = img;
-        this.displayName = displayName;
+        this.name = name;
     }
 }

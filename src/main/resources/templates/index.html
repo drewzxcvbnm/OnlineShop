@@ -18,7 +18,7 @@
         <td><img id="category-img" class="rounded mx-auto d-block" th:src="@{/images/{img}(img=${category.getImg()})}">
         </td>
         <td id="category-name">
-            <a th:id="${category.id}" th:text="${category.getDisplayName()}"
+            <a th:id="${category.id}" th:text="${category.getName()}"
                th:href="@{/category/{cat}(cat=${category.id})}"></a>
         </td>
     </tr>
