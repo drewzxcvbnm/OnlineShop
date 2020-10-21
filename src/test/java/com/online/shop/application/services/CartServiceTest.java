@@ -41,24 +41,25 @@ public class CartServiceTest {
 
     @Test
     public void addProductToCart() {
-        when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
+        when(productRepo.findObligatoryProduct(anyLong())).thenReturn(new Product());
         cartService.addProductToCart(-1L);
-        verify(productRepo).findById(-1L);
+        verify(productRepo).findObligatoryProduct(-1L);
         assertThat(cartService.getCartSize()).isEqualTo(1);
     }
 
     @Test
     public void getCartProducts() {
-        when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
+        when(productRepo.findObligatoryProduct(anyLong())).thenReturn(new Product());
         when(productMapper.toPartialProductDto(any())).thenReturn(new PartialProductDto());
         cartService.addProductToCart(-1L);
-        verify(productRepo).findById(-1L);
+        verify(productRepo).findObligatoryProduct(-1L);
         assertThat(cartService.getCartProducts().size()).isEqualTo(1);
     }
 
     @Test
     public void submitOrder() {
         when(userService.getCurrentUser()).thenReturn(Optional.empty());
+        when(productRepo.findObligatoryProduct(anyLong())).thenReturn(Product.builder().id(1L).build());
         when(productRepo.findById(anyLong())).thenReturn(Optional.of(Product.builder().id(1L).build()));
         cartService.addProductToCart(-1L);
 
@@ -72,9 +73,9 @@ public class CartServiceTest {
 
     @Test
     public void clearCart() {
-        when(productRepo.findById(anyLong())).thenReturn(Optional.of(new Product()));
+        when(productRepo.findObligatoryProduct(anyLong())).thenReturn(new Product());
         cartService.addProductToCart(-1L);
-        verify(productRepo).findById(-1L);
+        verify(productRepo).findObligatoryProduct(-1L);
         assertThat(cartService.getCartSize()).isEqualTo(1);
         cartService.clearCart();
         assertThat(cartService.getCartSize()).isEqualTo(0);

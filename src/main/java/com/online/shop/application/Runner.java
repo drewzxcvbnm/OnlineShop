@@ -91,11 +91,13 @@ public class Runner implements CommandLineRunner {
 
     @SneakyThrows
     private byte[] getAdminPic() {
-        byte[] bytes = getClass().getClassLoader().getResourceAsStream("static/images/admin_profile.png").readAllBytes();
+        byte[] bytes = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("static/images/admin_profile.png").readAllBytes();
         Byte[] byteObjects = new Byte[bytes.length];
         int i = 0;
-        for (byte b : bytes)
+        for (byte b : bytes) {
             byteObjects[i++] = b;  // Autoboxing.
+        }
         return bytes;
     }
 

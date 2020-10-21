@@ -15,7 +15,7 @@ public class UserImageService {
     @SneakyThrows
     public UserImageService(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.defaultImage = getClass().getClassLoader()
+        this.defaultImage = Thread.currentThread().getContextClassLoader()
                 .getResourceAsStream("static/images/profile_2.png")
                 .readAllBytes();
     }
