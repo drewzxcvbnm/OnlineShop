@@ -75,7 +75,7 @@
     <div class="form-group">
         <label>Product category: </label>
         <select th:field="*{category.id}" th:value="*{category}" class="form-control">
-            <option th:value="${cat.id}" th:text="${cat.displayName}"
+            <option th:value="${cat.id}" th:text="${cat.name}"
                     th:each="cat : ${@categoriesManager.getAllCategoryDtos()}"></option>
         </select>
     </div>
