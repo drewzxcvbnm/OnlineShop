@@ -76,6 +76,18 @@ public class Runner implements CommandLineRunner {
                 .price(new BigDecimal("890.00"))
                 .properties(Arrays.asList("Processor: AMD Ryzen 7 3750U, 2.3GHz", "Graphics: NVIDIA GeForce GTX 1650", "Operating System: Windows 10 Home"))
                 .build());
+        productRepo.save(Product.builder().category(computers)
+                .name("Razer Blade Pro 17")
+                .description("Pushing the limits to what a gaming laptop can do. The Razer Blade Pro 17 is built with a powerful processor to run performance-demanding AAA games on the go. We’ve made it nearly 25% smaller than its predecessor, with a faster 17.3” display that’s fitted into a body as sleek and compact as a 15” laptop.")
+                .price(new BigDecimal("1790.00"))
+                .properties(Arrays.asList("Processor: Intel Core i7-10875H", "Graphics: GeForce RTX 2080 Super Max-Q", "Operating System: Windows 10 Pro"))
+                .build());
+        productRepo.save(Product.builder().category(portableElectronics)
+                .name("Xiaomi Mi 10T Pro")
+                .description(" The Xiaomi Mi 10T Pro is a great phone for its price, with a main camera that takes good pictures, a powerful processor and a fairly long-lasting battery. It’s not perfect - we had issues with its size, screen quality and the way the back picked up fingerprints too much, but some might not mind these shortcomings at all. In general it’s a pretty good handset, but it’s not for everyone. ")
+                .price(new BigDecimal("540.00"))
+                .properties(Arrays.asList("Dimensions: 165.1 x 76.4 x 9.3 mm (6.5 x 3.01 x 0.37 in)", "Weight: 218 g (7.69 oz)", "Operating System: Android 10, MIUI 12", "Chipset: Qualcomm SM8250 Snapdragon 865 (7 nm+)", "Processor: Octa-core (1x2.84 GHz Kryo 585 & 3x2.42 GHz Kryo 585 & 4x1.80 GHz Kryo 585)", "Graphics: Adreno 650"))
+                .build());
         Product genericProduct = Product.builder().category(computers)
                 .name("Generic Product Name")
                 .description("Best product description")
