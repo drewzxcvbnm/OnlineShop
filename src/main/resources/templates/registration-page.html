@@ -23,18 +23,34 @@
             width: 30%;
             text-align: left;
         }
+
+        .file {
+            visibility: hidden;
+            position: absolute;
+        }
     </style>
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
 <div th:fragment="content" style="display: flex;justify-content: center">
-    <form name="f" th:action="@{/register}" method="post" th:object="${userDto}"
+    <form name="f" th:action="@{/user/register}" method="post" th:object="${userDto}" enctype="multipart/form-data"
           style="width: 30%;text-align: center;margin-top: 30px">
         <legend style="margin-bottom: 30px">Please enter new user credentials:</legend>
         <div th:if="${#fields.errors('username').contains('Username is not unique')}" class="alert alert-danger">
             Username is not unique
         </div>
         <table id="form-table">
+            <tr>
+                <img th:src="@{~/images/profile_2.png}" id="preview" style="height: auto;max-width: 35%"
+                     class="img-thumbnail">
+                <input type="file" name="profilePicture" class="file" accept="image/*">
+                <div class="input-group my-3">
+                    <input type="text" class="form-control" disabled placeholder="Profile Picture" id="file">
+                    <div class="input-group-append">
+                        <button type="button" class="browse btn btn-primary">Select picture</button>
+                    </div>
+                </div>
+            </tr>
             <tr>
                 <td><span class="field-label">Username:</span></td>
                 <td><input th:errorclass="border-danger" placeholder="Unique username" th:field="*{username}"
@@ -84,4 +100,31 @@
     </form>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script>
+    $(document).on("click", ".browse", function () {
+        var file = $(this).parents().find(".file");
+        file.trigger("click");
+    });
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $("#file").val(fileName);
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("preview").src = e.target.result;
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
+</script>
 </html>

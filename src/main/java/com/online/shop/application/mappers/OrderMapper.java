@@ -14,6 +14,10 @@ public interface OrderMapper {
     @Mapping(target = "purchases", ignore = true)
     Order toOrder(OrderDto dto);
 
+    @Mapping(target = "purchasedProducts", ignore = true)
+    OrderDto toOrderDto(Order order);
+
+    @Mapping(target = "purchasedProducts", ignore = true)
     void updateOrderDto(@MappingTarget OrderDto orderDto, UserInfo userInfo);
 
 }

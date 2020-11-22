@@ -12,16 +12,18 @@
 <div class="navbar" th:fragment="header" style="background-color: darkslategray">
     <ul class="nav navbar-nav list-menu">
         <a href="/" class="list-item btn">Home</a>
-        <a href="/login" class="list-item btn">Login</a>
+        <a href="/login" class="list-item btn" sec:authorize="!isAuthenticated()">Login</a>
         <a sec:authorize="isAuthenticated()" href="/logout" class="list-item btn">Logout</a>
-        <a href="/register" class="list-item btn">Register</a>
+        <a href="/user/register" class="list-item btn">Register</a>
         <a href="/about" class="list-item btn">About</a>
+        <a href="/orders" th:if="${@userService.isAdmin()}" class="list-item btn">Admin Page</a>
     </ul>
     <ul class="nav navbar-nav navbar-right list-menu">
-        <a sec:authorize="isAuthenticated()" style="display: inline" id="profileLink">
+        <a sec:authorize="isAuthenticated()" style="display: inline;text-decoration: none" href="/user/profile"
+           id="profileLink">
             <span th:text="'Welcome, '+${#authentication.getPrincipal().getUsername()}"
                   class="list-item"></span>
-            <img th:src="@{~/images/profile.svg}"
+            <img th:src="@{|~/user/${@userService.getObligatoryCurrentUser().getId()}/image|}"
                  style="width: 24px;height: 24px;margin-right: 40px;margin-left: 10px;border-radius: 20px;margin-bottom: 5px">
         </a>
         <a id="cartLink" class="list-item" href="/cart/content">

@@ -3,13 +3,22 @@ package com.online.shop.application.mappers;
 import com.online.shop.application.dto.UserDto;
 import com.online.shop.application.entities.User;
 import com.online.shop.application.entities.UserInfo;
+import com.online.shop.application.mappers.service.UserImageMapper;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UserMapperTest {
 
+    @Mock
+    private UserImageMapper userImageMapper;
+    @InjectMocks
     private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test

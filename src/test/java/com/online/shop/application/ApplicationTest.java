@@ -2,6 +2,7 @@ package com.online.shop.application;
 
 import com.online.shop.application.controllers.CartController;
 import com.online.shop.application.entities.Order;
+import com.online.shop.application.entities.OrderStatus;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.entities.ProductReview;
 import com.online.shop.application.repositories.CategoryRepo;
@@ -206,6 +207,7 @@ public class ApplicationTest {
         order.setBankAccount("NL86ABNA1735658812");
         order.setName("Andris");
         order.setSurname("Zacs");
+        order.setStatus(OrderStatus.PROCESSING);
         return order;
     }
 

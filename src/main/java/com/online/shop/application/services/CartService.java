@@ -3,9 +3,9 @@ package com.online.shop.application.services;
 import com.online.shop.application.dto.OrderDto;
 import com.online.shop.application.dto.PartialProductDto;
 import com.online.shop.application.entities.Order;
+import com.online.shop.application.entities.OrderStatus;
 import com.online.shop.application.entities.Product;
 import com.online.shop.application.entities.Purchase;
-import com.online.shop.application.exceptions.ItemNotFoundException;
 import com.online.shop.application.mappers.OrderMapper;
 import com.online.shop.application.mappers.ProductMapper;
 import com.online.shop.application.repositories.OrderRepo;
@@ -33,12 +33,10 @@ public class CartService {
     private final OrderMapper orderMapper;
     private final OrderRepo orderRepo;
     private final UserService userService;
-    private List<Product> cart = new ArrayList<>();
+    private final List<Product> cart = new ArrayList<>();
 
     public void addProductToCart(Long productId) {
-        Product product = productRepo.findById(productId)
-                .orElseThrow(ItemNotFoundException.supplier("Cannot find item by Id:[%d]", productId));
-        cart.add(product);
+        cart.add(productRepo.findObligatoryProduct(productId));
     }
 
     public List<PartialProductDto> getCartProducts() {
@@ -50,6 +48,7 @@ public class CartService {
     @Transactional
     public void submitOrder(OrderDto orderDto) {
         Order order = orderMapper.toOrder(orderDto);
+        order.setStatus(OrderStatus.PROCESSING);
         order.setPurchases(getPurchasedProducts(order));
         order.setUser(userService.getCurrentUser().orElse(null));
         orderRepo.save(order);
