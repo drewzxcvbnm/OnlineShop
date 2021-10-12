@@ -10,8 +10,8 @@ plugins {
 group 'com.online.shop.application'
 version '1.2'
 
-sourceCompatibility = 14
-targetCompatibility = 14
+sourceCompatibility = 11
+targetCompatibility = 11
 
 jacoco {
     toolVersion = "0.8.6"
