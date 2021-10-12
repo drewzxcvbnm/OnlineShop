@@ -22,7 +22,7 @@ public class ItemController {
     public String categoryProducts(@PathVariable long categoryId, Model model) {
         Category category = categoryRepo.getById(categoryId);
         model.addAttribute("products", productRetrievalService.getProductsByCategory(category));
-        model.addAttribute("category", category.getDisplayName());
+        model.addAttribute("category", category.getName());
         model.addAttribute("cat", category);
         return "category-products";
     }

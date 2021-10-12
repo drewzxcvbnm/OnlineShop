@@ -32,6 +32,6 @@ public class RunnerTest {
     @Test
     public void run() throws Exception {
         runner.run();
-        verify(productRepo, times(13)).save(any());
+        verify(productRepo, times(15)).save(any());
     }
 }

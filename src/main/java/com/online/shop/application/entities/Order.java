@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -23,6 +24,8 @@ public class Order {
     private String surname;
     private String address;
     private String bankAccount;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @JoinColumn
     @ManyToOne(optional = true)
     private User user;
@@ -34,6 +37,12 @@ public class Order {
         this.purchases.clear();
         this.purchases.addAll(purchases);
         purchases.forEach(p -> p.setOrder(this));
+    }
+
+    public List<Product> getPurchasedProducts() {
+        return purchases.stream()
+                .map(Purchase::getProduct)
+                .collect(Collectors.toList());
     }
 
 }

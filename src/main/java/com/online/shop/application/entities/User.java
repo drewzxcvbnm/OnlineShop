@@ -29,4 +29,6 @@ public class User {
     private List<ProductReview> productReviews = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> orders;
+    @Lob
+    private byte[] profilePicture;
 }
