@@ -11,6 +11,7 @@ group 'com.online.shop.application'
 version '1.2'
 
 sourceCompatibility = 14
+targetCompatibility = 14
 
 jacoco {
     toolVersion = "0.8.6"
