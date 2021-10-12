@@ -16,9 +16,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     User findUserById(long id);
 
-    @Query(value = "SELECT o.* FROM USER u " +
-            "JOIN \"order\" o on o.user_id = u.id " +
-            "where u.id=?1",
+    @Query(value = "SELECT o.* FROM USER u "
+            + "JOIN \"order\" o on o.user_id = u.id "
+            + "where u.id=?1",
             nativeQuery = true)
     List<Order> getUserOrders(long userId);
 }

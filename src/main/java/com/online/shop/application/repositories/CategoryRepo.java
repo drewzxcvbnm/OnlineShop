@@ -12,9 +12,9 @@ public interface CategoryRepo extends JpaRepository<Category, Long> {
     @Query("select c from Category c where c.id=?1")
     Category getById(Long id);
 
-    @Query(value = "select p.* from CATEGORY c " +
-            "join PRODUCT P on c.ID = P.CATEGORY_ID " +
-            "where c.ID=?1", nativeQuery = true)
+    @Query(value = "select p.* from CATEGORY c "
+            + "join PRODUCT P on c.ID = P.CATEGORY_ID "
+            + "where c.ID=?1", nativeQuery = true)
     List<Product> getCategoryProducts(long categoryId);
 
 }

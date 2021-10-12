@@ -12,11 +12,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Product getById(Long id);
 
-    @Query(value = "select u.* from PRODUCT p " +
-            "join PURCHASE P2 on p.ID = P2.PRODUCT_ID " +
-            "join \"order\" o on P2.\"order_id\" = o.ID " +
-            "join USER U on o.USER_ID = U.ID\n" +
-            "where p.ID=?1", nativeQuery = true)
+    @Query(value = "select u.* from PRODUCT p "
+            + "join PURCHASE P2 on p.ID = P2.PRODUCT_ID "
+            + "join \"order\" o on P2.\"order_id\" = o.ID "
+            + "join USER U on o.USER_ID = U.ID\n"
+            + "where p.ID=?1", nativeQuery = true)
     List<User> getAllProductOwners();
 
     default Product findObligatoryProduct(long productId) {
