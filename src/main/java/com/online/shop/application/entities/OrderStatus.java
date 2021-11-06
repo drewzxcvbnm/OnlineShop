@@ -5,6 +5,7 @@ import lombok.Getter;
 public enum OrderStatus {
     PROCESSING("Processing Order Credentials"),
     IN_PROGRESS("In Progress"),
+    CANCELLED("Cancelled"),
     DONE("Done");
 
     @Getter
