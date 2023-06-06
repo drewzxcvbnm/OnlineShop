@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:mockdb
+    url: jdbc:h2:mem:mockdb;NON_KEYWORDS=user
     username: sa
     password: ""
     driver-class-name: org.h2.Driver

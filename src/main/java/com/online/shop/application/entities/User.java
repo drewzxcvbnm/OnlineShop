@@ -25,10 +25,12 @@ public class User {
     private Authority authority;
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     private UserInfo userInfo;
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ProductReview> productReviews = new ArrayList<>();
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
     @Lob
     private byte[] profilePicture;
 }

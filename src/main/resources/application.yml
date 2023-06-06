@@ -3,7 +3,7 @@ spring:
     active: app
   datasource:
     #    url: jdbc:h2:mem:mockdb
-    url: jdbc:h2:file:./testdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    url: jdbc:h2:file:./testdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;NON_KEYWORDS=user
     username: sa
     password: ""
     driver-class-name: org.h2.Driver
